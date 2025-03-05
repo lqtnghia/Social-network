@@ -19,7 +19,7 @@ const FormField = ({ control, label, name, Component, type }) => {
         //   );
         // }}
         render={({ field }) => (
-          <Component {...field} control={control} type={type} />
+          <Component {...field} control={control} type={type} fullWidth />
         )}
       />
     </div>
