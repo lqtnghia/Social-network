@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+@import 'tailwindcss/preflight'; /* Thay thế @tailwind base */
+@import 'tailwindcss/utilities'; /* Không cần @tailwind components nữa */
+
+body {
+  font-family: 'Public Sans Variable', sans-serif;
+}
+
+/* Thêm các biến tùy chỉnh */
+:root {
+  --color-dark: #000000;
+  --color-dark-100: #4b465c;
+  --color-dark-200: #f8f7fa;
+  --font-size-10: 10px;
+}
+
+/* Sửa lại để áp dụng màu nền đúng */
+.bg-dark {
+  background-color: var(--color-dark);
+}
+
+.bg-dark-100 {
+  background-color: var(--color-dark-100);
+}
+
+.bg-dark-200 {
+  background-color: var(--color-dark-200);
+}
+
+.text-10 {
+  font-size: var(--font-size-10);
+}
+
+.text-dark-100 {
+  color: var(--color-dark-100);
+}
