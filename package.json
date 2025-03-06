@@ -16,8 +16,10 @@
     "@mui/icons-material": "^6.4.6",
     "@mui/material": "^6.4.6",
     "@tailwindcss/vite": "^4.0.9",
-    "react": "^19.0.0-rc.1",
-    "react-dom": "^19.0.0-rc.1",
+    "mui-one-time-password-input": "^3.0.2",
+    "mui-tel-input": "^8.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-router-dom": "^7.2.0",
     "weconnect-app": "file:"
@@ -33,7 +35,7 @@
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.0.9",
+    "tailwindcss": "^4.0.10",
     "vite": "^6.2.0"
   }
 }

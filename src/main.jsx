@@ -4,10 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { lazy } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import theme from './configs/muiConfig.js';
+import AuthLayout from '@pages/auth/AuthLayout';
+import LoginPage from '@pages/auth/LoginPage';
+import OTPVerifyPage from '@pages/auth/OTPVerifyPage';
 
 const HomePage = lazy(() => import('@pages/HomePage.jsx'));
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
-const RegisterPage = lazy(() => import('@pages/RegisterPage'));
+const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 const ModalProvider = lazy(() => import('@context/ModalProvider'));
 
 const router = createBrowserRouter([
@@ -19,8 +22,21 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/register',
-        element: <RegisterPage />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: '/register',
+            element: <RegisterPage />,
+          },
+          {
+            path: '/login',
+            element: <LoginPage />,
+          },
+          {
+            path: '/verify-otp',
+            element: <OTPVerifyPage />,
+          },
+        ],
       },
     ],
   },
