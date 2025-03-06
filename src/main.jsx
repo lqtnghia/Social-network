@@ -4,13 +4,15 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { lazy } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import theme from './configs/muiConfig.js';
-import AuthLayout from '@pages/auth/AuthLayout';
-import LoginPage from '@pages/auth/LoginPage';
-import OTPVerifyPage from '@pages/auth/OTPVerifyPage';
+import { Provider } from 'react-redux';
+import { store } from '@redux/store';
 
-const HomePage = lazy(() => import('@pages/HomePage.jsx'));
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
+const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
+const HomePage = lazy(() => import('@pages/HomePage.jsx'));
 const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
+const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
+const OTPVerifyPage = lazy(() => import('@pages/auth/OTPVerifyPage'));
 const ModalProvider = lazy(() => import('@context/ModalProvider'));
 
 const router = createBrowserRouter([
@@ -43,9 +45,11 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={theme}>
-    <ModalProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </ModalProvider>
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <ModalProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ModalProvider>
+    </ThemeProvider>
+  </Provider>,
 );
