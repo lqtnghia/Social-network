@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import React from 'react';
 
-const TextInput = ({ onChange, name, value, type = 'text' }) => {
+const TextInput = ({ onChange, name, value, type = 'text', error }) => {
   return (
     <div>
       <TextField
@@ -14,6 +14,7 @@ const TextInput = ({ onChange, name, value, type = 'text' }) => {
         name={name}
         value={value}
         type={type}
+        error={error}
       />
     </div>
   );
