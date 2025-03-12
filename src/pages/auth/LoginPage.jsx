@@ -38,6 +38,7 @@ const LoginPage = () => {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm({
     resolver: yupResolver(formSchema),
   });
@@ -53,9 +54,13 @@ const LoginPage = () => {
     }
     if (isSuccess) {
       dispatch(openSnackbar({ message: data.message })); // type đã set success mặc định trong store
-      navigate('/verify-otp');
+      navigate('/verify-otp', {
+        state: {
+          email: getValues('email'),
+        },
+      });
     }
-  }, [isError, dispatch, error, data, navigate, isSuccess]);
+  }, [isError, dispatch, error, data, navigate, isSuccess, getValues]);
 
   return (
     <div>

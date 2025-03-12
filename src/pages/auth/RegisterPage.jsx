@@ -18,15 +18,6 @@ const RegisterPage = () => {
     useRegisterMutation();
 
   const formSchema = yup.object().shape({
-    // fullName: yup.string().required(),
-    // email: yup
-    //   .string()
-    //   .matches(
-    //     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-    //     'Email is not valid',
-    //   )
-    //   .required(),
-    // password: yup.string().required(),
     fullname: yup.string().required('Full name is required'),
     email: yup
       .string()
