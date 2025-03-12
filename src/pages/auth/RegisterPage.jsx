@@ -18,15 +18,25 @@ const RegisterPage = () => {
     useRegisterMutation();
 
   const formSchema = yup.object().shape({
-    fullname: yup.string().required(),
+    // fullName: yup.string().required(),
+    // email: yup
+    //   .string()
+    //   .matches(
+    //     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+    //     'Email is not valid',
+    //   )
+    //   .required(),
+    // password: yup.string().required(),
+    fullname: yup.string().required('Full name is required'),
     email: yup
       .string()
-      .matches(
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-        'Email is not valid',
-      )
-      .required(),
-    Password: yup.string().required(),
+      .email('Email is not valid') // Kiểm tra định dạng email tự động
+      .required('Email is required'),
+    password: yup
+      .string()
+      .min(5, 'Password must be at least 5 characters')
+      .max(160, 'Password must be at most 160 characters')
+      .required('Password is required'),
   });
 
   const {
@@ -73,7 +83,7 @@ const RegisterPage = () => {
           label="Password"
           control={control}
           Component={TextInput}
-          error={errors['Password']}
+          error={errors['password']}
           type="password"
         />
         <Button variant="contained" type="submit">
