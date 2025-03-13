@@ -12,9 +12,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 const OTPVerifyPage = () => {
   const { control, handleSubmit } = useForm();
   const location = useLocation();
-  // console.log(location)
+  console.log(location);
   const dispatch = useDispatch();
-  const [verifyOTP, { data, isLoading, isError, error, isSuccess }] =
+  const [verifyOTP, { data = {}, isLoading, isError, error, isSuccess }] =
     useVerifyOTPMutation();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const OTPVerifyPage = () => {
     console.log({ formData });
     verifyOTP({ otp: formData.otp, email: location?.state?.email });
   }
-  // console.log(data);
+  console.log(data);
 
   useEffect(() => {
     if (isError) {
@@ -42,7 +42,7 @@ const OTPVerifyPage = () => {
       >
         Two-Step Verification
       </p>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
           name="otp"
           label="Type your 6 digit security code"

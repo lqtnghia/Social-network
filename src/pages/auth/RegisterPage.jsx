@@ -18,7 +18,7 @@ const RegisterPage = () => {
     useRegisterMutation();
 
   const formSchema = yup.object().shape({
-    fullname: yup.string().required('Full name is required'),
+    fullName: yup.string().required('Full name is required'),
     email: yup
       .string()
       .email('Email is not valid') // Kiểm tra định dạng email tự động
@@ -60,7 +60,7 @@ const RegisterPage = () => {
           label="Full Name"
           control={control}
           Component={TextInput}
-          error={errors['fullname']}
+          error={errors['fullName']}
         />
         <FormField
           name="email"

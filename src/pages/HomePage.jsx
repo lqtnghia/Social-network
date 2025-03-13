@@ -1,6 +1,15 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
+import { useGetAuthUserQuery } from '@services/rootApi';
+import { Navigate } from 'react-router-dom';
 
 function HomePage() {
+  const response = useGetAuthUserQuery();
+  console.log(response);
+
+  // if (response?.data?._id) {
+  //   return <Navigate to="/login" />;
+  // }
+
   return (
     <div>
       <p>Home Page</p>

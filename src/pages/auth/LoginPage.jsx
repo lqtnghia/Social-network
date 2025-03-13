@@ -14,11 +14,6 @@ import { openSnackbar } from '@redux/slices/snackbarSlice';
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   dispatch(login({ accessToken: 'atk', refreshToken: 'rtk' }));
-  // }, [dispatch]);
-
   const [login, { data = {}, isLoading, error, isError, isSuccess }] =
     useLoginMutation();
 
