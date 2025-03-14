@@ -5,7 +5,8 @@ import { lazy } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import theme from './configs/muiConfig.js';
 import { Provider } from 'react-redux';
-import { store } from '@redux/store';
+import { persistor, store } from '@redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
@@ -14,14 +15,25 @@ const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
 const OTPVerifyPage = lazy(() => import('@pages/auth/OTPVerifyPage'));
 const ModalProvider = lazy(() => import('@context/ModalProvider'));
+const ProtectedLayout = lazy(() => import('@pages/ProtectedLayout'));
+const MessagePage = lazy(() => import('@pages/MessagePage'));
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       {
-        path: '/',
-        element: <HomePage />,
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: '/',
+            element: <HomePage />,
+          },
+          {
+            path: '/message',
+            element: <MessagePage />,
+          },
+        ],
       },
       {
         element: <AuthLayout />,
@@ -46,10 +58,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <ModalProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </ModalProvider>
-    </ThemeProvider>
+    <PersistGate loading={<p>loading...</p>} persistor={persistor}>
+      <ThemeProvider theme={theme}>
+        <ModalProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </ModalProvider>
+      </ThemeProvider>
+    </PersistGate>
   </Provider>,
 );

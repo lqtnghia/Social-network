@@ -1,19 +1,20 @@
 import { Button } from '@mui/material';
-import { useGetAuthUserQuery } from '@services/rootApi';
-import { Navigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function HomePage() {
-  const response = useGetAuthUserQuery();
-  console.log(response);
-
-  // if (response?.data?._id) {
-  //   return <Navigate to="/login" />;
-  // }
-
+  const [count, setCount] = useState(0);
   return (
     <div>
       <p>Home Page</p>
-      <Button variant="contained">Input</Button>
+      <p>Count: {count}</p>
+      <Button
+        variant="contained"
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        SUBMIT
+      </Button>
     </div>
   );
 }
