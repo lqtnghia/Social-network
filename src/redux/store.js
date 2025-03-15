@@ -1,6 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@redux/slices/authSlice';
 import snackbarReducer from '@redux/slices/snackbarSlice';
+import settingsReducer from '@redux/slices/settingsSlice';
+
 // import RootLayout from '@pages/RootLayout';
 import { rootApi } from '@services/rootApi';
 import persistReducer from 'redux-persist/es/persistReducer';
@@ -27,6 +29,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     auth: authReducer,
     snackbar: snackbarReducer,
+    settings: settingsReducer,
     [rootApi.reducerPath]: rootApi.reducer,
   }),
 );

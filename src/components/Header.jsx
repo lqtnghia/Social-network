@@ -1,6 +1,11 @@
 import { useLogout } from '@hooks/useLogout';
 import { useUserInfo } from '@hooks/useUserInfo';
-import { AccountCircle, Notifications, Search } from '@mui/icons-material';
+import {
+  AccountCircle,
+  Notifications,
+  Search,
+  Menu as MenuIcon,
+} from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
@@ -10,13 +15,21 @@ import {
   MenuItem,
   TextField,
   Toolbar,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
+import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const userInfo = useUserInfo();
   const { logOut } = useLogout();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const dispatch = useDispatch();
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -48,24 +61,38 @@ const Header = () => {
     <div>
       <AppBar color="white" position="static" className="!py-4">
         <Toolbar className="!min-h-fit justify-between">
-          <div className="flex items-center gap-4">
-            <img src="/Logo.png" className="h-8 w-8" />
+          {isMobile ? (
+            <IconButton onClick={() => dispatch(toggleDrawer())}>
+              <MenuIcon />
+            </IconButton>
+          ) : (
             <div className="flex items-center gap-4">
-              <Search />
-              <TextField
-                variant="standard"
-                name="search"
-                placeholder="search"
-                fullWidth
-                slotProps={{
-                  input: { className: 'h-10 px-3 py-2' },
-                  htmlInput: { className: '!p-0' },
-                }}
-              />
+              <Link to="/">
+                <img src="/Logo.png" className="h-8 w-8" />
+              </Link>
+              <div className="flex items-center gap-4">
+                <Search />
+                <TextField
+                  variant="standard"
+                  name="search"
+                  placeholder="search"
+                  fullWidth
+                  slotProps={{
+                    input: { className: 'h-10 px-3 py-2' },
+                    htmlInput: { className: '!p-0' },
+                  }}
+                  sx={{
+                    '.MuiInputBase-root::before': {
+                      display: 'none',
+                    },
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          )}
           <div>
             <IconButton size="medium">
+              {isMobile && <Search />}
               <Badge badgeContent={4} color="error">
                 <Notifications />
               </Badge>

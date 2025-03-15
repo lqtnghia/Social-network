@@ -6,15 +6,23 @@ import {
   People,
   Translate,
 } from '@mui/icons-material';
-import { List, ListSubheader } from '@mui/material';
+import {
+  Drawer,
+  List,
+  ListSubheader,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // const ListStyled = styled(List)`
 // padding: 16px 12px
 // border-radius: 4px`;
 
-const Sidebar = () => {
+const SidebarContent = () => {
   return (
     <div className="flex w-64 flex-col gap-4">
       <List className="flex flex-col gap-4 rounded-sm bg-white !p-4 shadow">
@@ -45,6 +53,32 @@ const Sidebar = () => {
         </Link>
       </List>
     </div>
+  );
+};
+
+const Sidebar = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isShowDrawer = useSelector((store) => store.settings.isShowDrawer);
+  const dispatch = useDispatch();
+
+  console.log('isMobile:', isMobile, 'isShowDrawer:', isShowDrawer);
+
+  return isMobile ? (
+    <Drawer
+      open={isShowDrawer}
+      onClose={() => dispatch(toggleDrawer())}
+      classes={{ paper: '!p-4 !bg-dark-200 flex flex-col gap-4' }}
+    >
+      <div>
+        <Link to="/">
+          <img src="/Logo.png" className="h-8 w-40" />
+        </Link>
+      </div>
+      <SidebarContent />
+    </Drawer>
+  ) : (
+    <SidebarContent />
   );
 };
 
