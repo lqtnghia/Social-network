@@ -44,6 +44,16 @@ paths:
                   userId:
                     type: string
                     example: '12345'
+        '401':
+          description: Đăng ký thất bại do dữ liệu không hợp lệ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Email đã tồn tại hoặc dữ liệu không hợp lệ'
   /api/login:
     post:
       summary: Đăng nhập người dùng
@@ -77,6 +87,16 @@ paths:
                   accessToken:
                     type: string
                     example: 'mock-token-123'
+        '401':
+          description: Đăng nhập thất bại do thông tin không đúng
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Email hoặc mật khẩu không đúng'
   /api/verify-otp:
     post:
       summary: Xác minh OTP
@@ -122,49 +142,16 @@ paths:
                       email:
                         type: string
                         example: 'lqtnghia2602@gmail.com'
-    summary: Xác minh OTP
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                example: 'lqtnghia2602@gmail.com'
-              otp:
-                type: string
-                example: '123456'
-            required:
-              - email
-              - otp
-    responses:
-      '200':
-        description: Xác minh OTP thành công
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: string
-                  example: 'Xác minh OTP thành công'
-                accessToken:
-                  type: string
-                  example: 'mock-token-123'
-                user:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      example: '12345'
-                    fullName:
-                      type: string
-                      example: 'Lê Quang Trọng Nghĩa'
-                    email:
-                      type: string
-                      example: 'lqtnghia2602@gmail.com'
+        '401':
+          description: Xác minh OTP thất bại do mã OTP không đúng
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Mã OTP không đúng hoặc đã hết hạn'
   /api/auth-user:
     get:
       summary: Lấy thông tin người dùng đã xác thực
@@ -187,6 +174,16 @@ paths:
                   email:
                     type: string
                     example: 'lqtnghia2602@gmail.com'
+        '401':
+          description: Không được phép truy cập do token không hợp lệ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Token không hợp lệ hoặc đã hết hạn'
 components:
   securitySchemes:
     bearerAuth:

@@ -10,7 +10,11 @@ import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const OTPVerifyPage = () => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      otp: '',
+    },
+  });
   const location = useLocation();
   console.log(location);
   const dispatch = useDispatch();
