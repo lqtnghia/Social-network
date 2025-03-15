@@ -14,6 +14,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
+import { logOutMiddleware } from './middleware';
 
 const persistConfig = {
   key: 'root',
@@ -37,7 +38,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(rootApi.middleware);
+    }).concat(logOutMiddleware, rootApi.middleware);
   },
 });
 

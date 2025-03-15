@@ -13,8 +13,11 @@ export const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
+    logOut: () => {
+      return initialState;
+    },
   },
 });
 
-export const { login } = authSlice.actions;
+export const { login, logOut } = authSlice.actions;
 export default authSlice.reducer;
