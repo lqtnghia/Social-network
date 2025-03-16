@@ -6,19 +6,13 @@ import {
   People,
   Translate,
 } from '@mui/icons-material';
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListSubheader,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Drawer, IconButton, List, ListSubheader } from '@mui/material';
 import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { useDetectLayout } from '@hooks/index';
 
 // const ListStyled = styled(List)`
 // padding: 16px 12px
@@ -59,17 +53,16 @@ const SidebarContent = () => {
 };
 
 const Sidebar = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMinimizeLayout } = useDetectLayout();
   const isShowDrawer = useSelector((store) => store.settings.isShowDrawer);
   const dispatch = useDispatch();
 
-  console.log('isMobile:', isMobile, 'isShowDrawer:', isShowDrawer);
+  // console.log('isMobile:', isMinimizeLayout, 'isShowDrawer:', isShowDrawer);
   const handleCloseSidebar = () => {
     dispatch(toggleDrawer());
   };
 
-  return isMobile ? (
+  return isMinimizeLayout ? (
     <Drawer
       open={isShowDrawer}
       onClose={() => dispatch(toggleDrawer())}

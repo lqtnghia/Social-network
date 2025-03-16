@@ -1,4 +1,11 @@
-import { Avatar, Button, TextareaAutosize, TextField } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Chip,
+  Stack,
+  TextareaAutosize,
+  TextField,
+} from '@mui/material';
 import { openDialog } from '@redux/slices/dialogSlice';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -19,14 +26,31 @@ export const ImageUploader = () => {
   });
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+    <div>
+      <div
+        {...getRootProps({
+          className:
+            'rounded border bg-slate-100 px-6 py-4 text-center cursor-pointer h-20 flex items-center justify-center',
+        })}
+      >
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        )}
+      </div>
+      {image?.name && (
+        <Stack className="mt-2">
+          <Chip
+            label={image.name}
+            onDelete={() => {
+              setImage(null);
+            }}
+            className="font-bold"
+          />
+        </Stack>
       )}
-      <div>{image?.name}</div>
     </div>
   );
 };
