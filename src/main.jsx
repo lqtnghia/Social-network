@@ -14,9 +14,10 @@ const HomePage = lazy(() => import('@pages/HomePage.jsx'));
 const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
 const OTPVerifyPage = lazy(() => import('@pages/auth/OTPVerifyPage'));
-const ModalProvider = lazy(() => import('@context/ModalProvider'));
+// const ModalProvider = lazy(() => import('@context/ModalProvider'));
 const ProtectedLayout = lazy(() => import('@pages/ProtectedLayout'));
 const MessagePage = lazy(() => import('@pages/MessagePage'));
+const Dialog = lazy(() => import('@components/Dialog'));
 
 const router = createBrowserRouter([
   {
@@ -60,9 +61,10 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={<p>loading...</p>} persistor={persistor}>
       <ThemeProvider theme={theme}>
-        <ModalProvider>
-          <RouterProvider router={router}></RouterProvider>
-        </ModalProvider>
+        {/* <ModalProvider> */}
+        <RouterProvider router={router}></RouterProvider>
+        <Dialog />
+        {/* </ModalProvider> */}
       </ThemeProvider>
     </PersistGate>
   </Provider>,

@@ -37,6 +37,7 @@ const OTPVerifyPage = () => {
       navigate('/');
     }
   }, [isError, dispatch, error, data, navigate, isSuccess]);
+  console.log(data);
 
   return (
     <div>

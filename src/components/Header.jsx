@@ -56,7 +56,7 @@ const Header = () => {
   const handleUserProfileClick = (e) => {
     setAnchorEl(e.target);
   };
-
+  console.log(userInfo);
   return (
     <div>
       <AppBar color="white" position="static" className="!py-4">
@@ -100,7 +100,16 @@ const Header = () => {
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}
               <Avatar className="!bg-primary-main">
-                {userInfo?.fullName?.[0]?.toUpperCase()}
+                {/* {userInfo?.fullName?.[0]?.toUpperCase()} */}
+                {
+                  userInfo?.fullName
+                    ? userInfo.fullName
+                        .split(' ') // Tách chuỗi thành mảng các từ
+                        .slice(-1)[0] // Lấy từ cuối cùng
+                        .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
+                        .toUpperCase() // Chuyển thành in hoa
+                    : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
+                }
               </Avatar>
             </IconButton>
           </div>

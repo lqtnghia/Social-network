@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material';
 import {
   Drawer,
+  IconButton,
   List,
   ListSubheader,
   useMediaQuery,
@@ -17,6 +18,7 @@ import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 
 // const ListStyled = styled(List)`
 // padding: 16px 12px
@@ -63,6 +65,9 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   console.log('isMobile:', isMobile, 'isShowDrawer:', isShowDrawer);
+  const handleCloseSidebar = () => {
+    dispatch(toggleDrawer());
+  };
 
   return isMobile ? (
     <Drawer
@@ -70,10 +75,13 @@ const Sidebar = () => {
       onClose={() => dispatch(toggleDrawer())}
       classes={{ paper: '!p-4 !bg-dark-200 flex flex-col gap-4' }}
     >
-      <div>
+      <div className="flex justify-between">
         <Link to="/">
           <img src="/Logo.png" className="h-8 w-40" />
         </Link>
+        <IconButton onClick={handleCloseSidebar}>
+          <CloseIcon />
+        </IconButton>
       </div>
       <SidebarContent />
     </Drawer>
