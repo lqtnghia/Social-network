@@ -1,23 +1,29 @@
+import { Collections, InsertEmoticon, Videocam } from '@mui/icons-material';
 import {
   Avatar,
+  Box,
   Button,
   Chip,
+  Divider,
+  IconButton,
   Stack,
   TextareaAutosize,
   TextField,
 } from '@mui/material';
 import { openDialog } from '@redux/slices/dialogSlice';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const ImageUploader = () => {
-  const [image, setImage] = useState(null);
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    console.log(acceptedFiles);
-    setImage(acceptedFiles[0]);
-  }, []);
+export const ImageUploader = ({ image, setImage }) => {
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      // Do something with the files
+      console.log(acceptedFiles);
+      setImage(acceptedFiles[0]);
+    },
+    [setImage],
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: false,
@@ -55,47 +61,104 @@ export const ImageUploader = () => {
   );
 };
 
-const PostCreation = () => {
+const PostCreation = ({ image = '/n.png' }) => {
   const userInfo = useSelector((state) => state.auth.user);
-
   const dispatch = useDispatch();
+
   return (
-    <div className="flex gap-2 rounded bg-white !p-4 shadow">
-      <Avatar className="!bg-primary-main">
-        {
-          userInfo?.fullName
-            ? userInfo.fullName
+    <div className="rounded bg-white shadow">
+      <div className="flex gap-2 !p-4">
+        <Avatar className="!bg-primary-main">
+          {/* {
+            userInfo?.fullName
+              ? userInfo.fullName
+                  .split(' ') // Tách chuỗi thành mảng các từ
+                  .slice(-1)[0] // Lấy từ cuối cùng
+                  .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
+                  .toUpperCase() // Chuyển thành in hoa
+              : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
+          } */}
+          {
+            image ? (
+              <img src={image} />
+            ) : userInfo?.fullName ? (
+              userInfo.fullName
                 .split(' ') // Tách chuỗi thành mảng các từ
                 .slice(-1)[0] // Lấy từ cuối cùng
                 .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
                 .toUpperCase() // Chuyển thành in hoa
-            : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
-        }
-      </Avatar>
-      <TextField
-        className="flex-1"
-        size="small"
-        placeholder="What's on your mind?"
-        onClick={() => {
-          dispatch(
-            openDialog({
-              open: true,
-              title: 'Create Post ',
-              contentType: 'NEW_POST_DIALOG',
-              additionalData: userInfo,
-              // actions: (
-              //   <Button
-              //     variant="contained"
-              //     color="primary"
-              //     onClick={() => dispatch(closeDialog())}
-              //   >
-              //     Post
-              //   </Button>
-              // ),
-            }),
-          );
-        }}
-      />
+            ) : (
+              ''
+            ) // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
+          }
+        </Avatar>
+        <TextField
+          className="flex-1"
+          size="small"
+          placeholder="What's on your mind?"
+          onClick={() => {
+            dispatch(
+              openDialog({
+                open: true,
+                title: 'Create Post ',
+                contentType: 'NEW_POST_DIALOG',
+                additionalData: userInfo,
+                // actions: (
+                //   <Button
+                //     variant="contained"
+                //     color="primary"
+                //     onClick={() => dispatch(closeDialog())}
+                //   >
+                //     Post
+                //   </Button>
+                // ),
+              }),
+            );
+          }}
+        />
+      </div>
+      <div>
+        <Divider
+          sx={{
+            borderBottomWidth: 2,
+            borderBottomStyle: 'solid',
+            borderBottomColor: '-moz-initial',
+            backgroundColor: 'transparent',
+            px: '2px', // Padding-x chính xác là 2px
+          }}
+        />
+        <div className="flex items-center justify-center !p-2">
+          <div className="flex flex-1 justify-center">
+            <IconButton
+              className="flex w-full gap-1"
+              onClick={() => {
+                dispatch(
+                  openDialog({
+                    open: true,
+                    title: 'Live Video ',
+                    contentType: 'LIVE_DIALOG',
+                  }),
+                );
+              }}
+            >
+              <Videocam color="error" />
+              <p className="text-sm">Live video</p>
+            </IconButton>
+          </div>
+          <div className="flex flex-1 justify-center">
+            <IconButton className="flex w-full gap-1">
+              <Collections color="success" />
+              <p className="text-sm">Photo/video</p>
+            </IconButton>
+          </div>
+          <div className="flex flex-1 justify-center">
+            <IconButton className="flex w-full gap-1">
+              <InsertEmoticon color="warning" />
+              <p className="text-sm">Feeling/activity</p>
+            </IconButton>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -184,6 +184,76 @@ paths:
                   message:
                     type: string
                     example: 'Token không hợp lệ hoặc đã hết hạn'
+/api/posts:
+  post:
+  summary: Tạo bài viết mới
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              example: 'Đây là nội dung bài viết của tôi'
+            image:
+              type: string
+              example: 'https://example.com/image.jpg'
+          required:
+            - content
+  responses:
+    '201':
+      description: Tạo bài viết thành công
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Tạo bài viết thành công'
+              post:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '67890'
+                  content:
+                    type: string
+                    example: 'Đây là nội dung bài viết của tôi'
+                  image:
+                    type: string
+                    example: 'https://example.com/image.jpg'
+                  userId:
+                    type: string
+                    example: '12345'
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: '2025-03-16T12:00:00Z'
+    '400':
+      description: Dữ liệu không hợp lệ
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Nội dung bài viết không được để trống'
+    '401':
+      description: Không được phép truy cập do token không hợp lệ
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Token không hợp lệ hoặc đã hết hạn'
 components:
   securitySchemes:
     bearerAuth:

@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Close } from '@mui/icons-material';
 import NewPostDialog from './configs/NewPostDialog';
+import LiveDialog from './configs/LiveDialog';
 
 const DynamicContent = ({ contentType, additionalData }) => {
   switch (contentType) {
     case 'NEW_POST_DIALOG':
       return <NewPostDialog userInfo={additionalData} />;
+    case 'LIVE_DIALOG':
+      return <LiveDialog />;
     default:
       return <p></p>;
   }

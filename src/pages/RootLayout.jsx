@@ -12,7 +12,7 @@ const RootLayout = () => {
   const dispatch = useDispatch();
 
   const { open, type, message } = useSelector((state) => {
-    console.log('RootLayout', state);
+    // console.log('RootLayout', state);
     return state.snackbar;
   });
 

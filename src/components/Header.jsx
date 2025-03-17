@@ -1,11 +1,16 @@
-import { useDetectLayout } from '@hooks/index';
-import { useLogout } from '@hooks/useLogout';
-import { useUserInfo } from '@hooks/useUserInfo';
+import { useDetectLayout, useUserInfo, useLogout } from '@hooks/index';
 import {
   AccountCircle,
   Notifications,
   Search,
   Menu as MenuIcon,
+  QuestionAnswer,
+  Category,
+  Home,
+  OndemandVideo,
+  Storefront,
+  Group,
+  SportsEsports,
 } from '@mui/icons-material';
 import {
   AppBar,
@@ -22,7 +27,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ image = '/n.png' }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const userInfo = useUserInfo();
   const { logOut } = useLogout();
@@ -56,7 +61,7 @@ const Header = () => {
   };
   console.log(userInfo);
   return (
-    <div>
+    <div className="flex">
       <AppBar color="white" position="static" className="!py-4">
         <Toolbar className="!min-h-fit justify-between">
           {isMinimizeLayout ? (
@@ -64,9 +69,9 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           ) : (
-            <div className="flex items-center gap-4">
+            <div className="flex flex-1 items-center gap-4">
               <Link to="/">
-                <img src="/Logo.png" className="h-8 w-8" />
+                <img src="/NaLa.png" className="h-12 w-12" />
               </Link>
               <div className="flex items-center gap-4">
                 <Search />
@@ -88,7 +93,43 @@ const Header = () => {
               </div>
             </div>
           )}
-          <div>
+          {!isMinimizeLayout && (
+            <div className="flex flex-1 items-center justify-between gap-1">
+              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+                <IconButton size="medium">
+                  <Home />
+                </IconButton>
+              </div>
+              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+                <IconButton size="medium">
+                  <OndemandVideo />
+                </IconButton>
+              </div>
+              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+                <IconButton size="medium">
+                  <Storefront />
+                </IconButton>
+              </div>
+              {/* <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+              <IconButton size="medium">
+                <Group />
+              </IconButton>
+            </div>
+            <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+              <IconButton size="medium">
+                <SportsEsports />
+              </IconButton>
+            </div> */}
+            </div>
+          )}
+
+          <div className="flex flex-1 justify-end">
+            <IconButton size="medium">
+              <Category />
+            </IconButton>
+            <IconButton size="medium">
+              <QuestionAnswer />
+            </IconButton>
             <IconButton size="medium">
               {isMinimizeLayout && <Search />}
               <Badge badgeContent={4} color="error">
@@ -98,8 +139,7 @@ const Header = () => {
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}
               <Avatar className="!bg-primary-main">
-                {/* {userInfo?.fullName?.[0]?.toUpperCase()} */}
-                {
+                {/* {
                   userInfo?.fullName
                     ? userInfo.fullName
                         .split(' ') // Tách chuỗi thành mảng các từ
@@ -107,6 +147,19 @@ const Header = () => {
                         .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
                         .toUpperCase() // Chuyển thành in hoa
                     : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
+                } */}
+                {
+                  image ? (
+                    <img src={image} />
+                  ) : userInfo?.fullName ? (
+                    userInfo.fullName
+                      .split(' ') // Tách chuỗi thành mảng các từ
+                      .slice(-1)[0] // Lấy từ cuối cùng
+                      .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
+                      .toUpperCase() // Chuyển thành in hoa
+                  ) : (
+                    ''
+                  ) // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
                 }
               </Avatar>
             </IconButton>

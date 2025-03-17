@@ -14,9 +14,9 @@ const ProtectedLayout = () => {
   // isLoading: nó chỉ set thành true ở lần query đầu tiên
   // isFetching: nó chỉ set thành true ở lần query đầu tiền và khi API được refresh
 
-  if (response?.data?._id) {
-    return <Navigate to="/login" />;
-  }
+  // if (response?.data?._id) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <div>

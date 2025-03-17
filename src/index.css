@@ -8,33 +8,11 @@ body {
 
 @theme {
   --color-primary-main: #246aa3;
-}
-/* Thêm các biến tùy chỉnh */
-:root {
+  --color-primary-header: #333334;
   --color-dark: #000000;
   --color-dark-100: #4b465c;
   --color-dark-200: #f8f7fa;
-  --color-primary-main: #246aa3;
+  --color-dark-200: #dbdade;
+  --color-dark-400: #909090;
   --font-size-10: 10px;
-}
-
-/* Sửa lại để áp dụng màu nền đúng */
-.bg-dark {
-  background-color: var(--color-dark);
-}
-
-.bg-dark-100 {
-  background-color: var(--color-dark-100);
-}
-
-.bg-dark-200 {
-  background-color: var(--color-dark-200);
-}
-
-.text-10 {
-  font-size: var(--font-size-10);
-}
-
-.text-dark-100 {
-  color: var(--color-dark-100);
 }

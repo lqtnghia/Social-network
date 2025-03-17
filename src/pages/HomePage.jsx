@@ -5,13 +5,13 @@ import Sidebar from '@components/Sidebar';
 
 function HomePage() {
   return (
-    <div className="bg-dark-200 flex gap-4 !p-6">
+    <div className="bg-dark-200 flex gap-20 !p-6">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex flex-2 flex-col gap-4">
         <PostCreation />
         <PostList />
       </div>
-      <div className="hidden w-64 sm:block">
+      <div className="hidden w-64 flex-[0.7] sm:block">
         <FriendRequest />
       </div>
     </div>

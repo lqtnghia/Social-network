@@ -70,7 +70,7 @@ const Sidebar = () => {
     >
       <div className="flex justify-between">
         <Link to="/">
-          <img src="/Logo.png" className="h-8 w-40" />
+          <img src="/NaLa.png" className="!h-10 w-10" />
         </Link>
         <IconButton onClick={handleCloseSidebar}>
           <CloseIcon />
