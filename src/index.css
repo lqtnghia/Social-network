@@ -16,3 +16,11 @@ body {
   --color-dark-400: #909090;
   --font-size-10: 10px;
 }
+
+:root {
+  --color-dark: #000000;
+  --color-dark-100: #4b465c;
+  --color-dark-200: #f8f7fa;
+  --color-primary-main: #246aa3;
+  --font-size-10: 10px;
+}

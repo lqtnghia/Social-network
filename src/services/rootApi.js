@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     console.log({ store: getState() });
     const token = getState().auth.accessToken;
-
+    // console.log('Access token:', token);
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
@@ -49,11 +49,16 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
         );
 
         result = await baseQuery(args, api, extraOptions);
-      } else {
-        api.dispatch(logOut());
-        window.location.href = '/login';
       }
+      // else {
+      //   api.dispatch(logOut());
+      //   window.location.href = '/login';
+      // }
     }
+    // else {
+    //   api.dispatch(logOut());
+    //   window.location.href = '/login';
+    // }
     console.log({ result });
   }
   return result;
@@ -62,6 +67,7 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
 export const rootApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithForceReauth,
+  tagTypes: ['Posts'], // Định nghĩa tag cho posts
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -113,7 +119,14 @@ export const rootApi = createApi({
             method: 'POST',
           };
         },
+        invalidatesTags: ['Posts'], // Invalidates cache của tag 'Posts' khi mutation thành công
       }),
+      getPosts: builder.query({
+        query: () => {
+          return '/posts';
+        },
+      }),
+      providesTags: ['Posts'], // Gắn tag 'Posts' cho query này
     };
   },
 });
@@ -125,5 +138,6 @@ export const {
   useGetAuthUserQuery,
   useCreatePostMutation,
   useRefreshTokenMutation,
+  useGetPostsQuery,
 } = rootApi;
 // khi các hook được sử dụng trong component thì rtk sẽ gọi baseQueryWithForceLogout

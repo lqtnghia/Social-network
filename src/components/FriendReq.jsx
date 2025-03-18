@@ -21,9 +21,13 @@ const FriendReq = ({ fullName = '', image }) => {
           <p className="font-bold">{fullName}</p>
           <p className="text-dark-400 text-sm"> 4 mutual friends</p>
         </div>
-        <div className="flex justify-between">
-          <Button>Comfirm</Button>
-          <Button>Delete</Button>
+        <div className="flex justify-between gap-1">
+          <Button size="small" variant="contained">
+            Comfirm
+          </Button>
+          <Button size="small" variant="outlined">
+            Delete
+          </Button>
         </div>
       </div>
     </div>

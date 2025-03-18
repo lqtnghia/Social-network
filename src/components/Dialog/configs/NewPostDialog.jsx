@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 const NewPostDialog = ({ userInfo }) => {
   const [image, setImage] = useState(null);
 
+  // eslint-disable-next-line no-unused-vars
   const [createNewPost, { data = {}, isSuccess, isLoading }] =
     useCreatePostMutation();
 
@@ -23,16 +24,39 @@ const NewPostDialog = ({ userInfo }) => {
 
   const dispatch = useDispatch();
 
+  // const handelCreateNewPost = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('content', content),
+  //       formData.append('image', image),
+  //       await createNewPost({ formData }).unwrap(); // thực hiện thành công rồi mới tới các bước tiếp theo
+  //     dispatch(closeDialog());
+  //     dispatch(openSnackbar({ message: 'Create Post Successfully!' }));
+  //   } catch (err) {
+  //     dispatch(openSnackbar({ type: 'error', message: err?.data?.message }));
+  //   }
+  // };
   const handelCreateNewPost = async () => {
     try {
       const formData = new FormData();
-      formData.append('content', content),
-        formData.append('image', image),
-        await createNewPost({ formData }).unwrap(); // thực hiện thành công rồi mới tới các bước tiếp theo
+      console.log('Content before append:', content); // Log để kiểm tra
+      console.log('Image before append:', image); // Log để kiểm tra (phải là file)
+      formData.append('content', content || ''); // Đảm bảo content luôn có giá trị
+      if (image) {
+        formData.append('image', image); // Chỉ append image nếu nó tồn tại và là file
+      }
+      const response = await createNewPost(formData).unwrap();
+      console.log('Response from server:', response);
       dispatch(closeDialog());
       dispatch(openSnackbar({ message: 'Create Post Successfully!' }));
     } catch (err) {
-      dispatch(openSnackbar({ type: 'error', message: err?.data?.message }));
+      console.error('Error during post creation:', err);
+      dispatch(
+        openSnackbar({
+          type: 'error',
+          message: err?.data?.message || 'Failed to create post',
+        }),
+      );
     }
   };
 

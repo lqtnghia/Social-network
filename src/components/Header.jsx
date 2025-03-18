@@ -27,7 +27,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Header = ({ image = '/n.png' }) => {
+const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const userInfo = useUserInfo();
   const { logOut } = useLogout();
@@ -139,7 +139,7 @@ const Header = ({ image = '/n.png' }) => {
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}
               <Avatar className="!bg-primary-main">
-                {/* {
+                {
                   userInfo?.fullName
                     ? userInfo.fullName
                         .split(' ') // Tách chuỗi thành mảng các từ
@@ -147,19 +147,6 @@ const Header = ({ image = '/n.png' }) => {
                         .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
                         .toUpperCase() // Chuyển thành in hoa
                     : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
-                } */}
-                {
-                  image ? (
-                    <img src={image} />
-                  ) : userInfo?.fullName ? (
-                    userInfo.fullName
-                      .split(' ') // Tách chuỗi thành mảng các từ
-                      .slice(-1)[0] // Lấy từ cuối cùng
-                      .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
-                      .toUpperCase() // Chuyển thành in hoa
-                  ) : (
-                    ''
-                  ) // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
                 }
               </Avatar>
             </IconButton>

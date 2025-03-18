@@ -61,7 +61,7 @@ export const ImageUploader = ({ image, setImage }) => {
   );
 };
 
-const PostCreation = ({ image = '/n.png' }) => {
+const PostCreation = () => {
   const userInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ const PostCreation = ({ image = '/n.png' }) => {
     <div className="rounded bg-white shadow">
       <div className="flex gap-2 !p-4">
         <Avatar className="!bg-primary-main">
-          {/* {
+          {
             userInfo?.fullName
               ? userInfo.fullName
                   .split(' ') // Tách chuỗi thành mảng các từ
@@ -77,19 +77,6 @@ const PostCreation = ({ image = '/n.png' }) => {
                   .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
                   .toUpperCase() // Chuyển thành in hoa
               : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
-          } */}
-          {
-            image ? (
-              <img src={image} />
-            ) : userInfo?.fullName ? (
-              userInfo.fullName
-                .split(' ') // Tách chuỗi thành mảng các từ
-                .slice(-1)[0] // Lấy từ cuối cùng
-                .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
-                .toUpperCase() // Chuyển thành in hoa
-            ) : (
-              ''
-            ) // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
           }
         </Avatar>
         <TextField
@@ -124,7 +111,7 @@ const PostCreation = ({ image = '/n.png' }) => {
             borderBottomStyle: 'solid',
             borderBottomColor: '-moz-initial',
             backgroundColor: 'transparent',
-            px: '2px', // Padding-x chính xác là 2px
+            px: '2px',
           }}
         />
         <div className="flex items-center justify-center !p-2">

@@ -62,7 +62,7 @@ const LoginPage = () => {
   }, [isError, dispatch, error, data, navigate, isSuccess, getValues]);
 
   return (
-    <div>
+    <div className="rounded !p-4">
       <p className="mb-5 text-center text-2xl font-bold">Login</p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
@@ -86,7 +86,7 @@ const LoginPage = () => {
         </Button>
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
       </form>
-      <p className="mt-4">
+      <p className="!mt-4">
         New on our platform? <Link to="/register">Create an account</Link>
       </p>
     </div>

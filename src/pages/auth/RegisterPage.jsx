@@ -57,7 +57,7 @@ const RegisterPage = () => {
 
   console.log(data, isLoading, errors);
   return (
-    <div>
+    <div className="rouded !p-4">
       <p className="mb-5 text-center text-2xl font-bold">Register</p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
