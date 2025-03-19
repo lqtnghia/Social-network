@@ -1,6 +1,8 @@
 import React from 'react';
-import Post from './Post';
+
 import { useGetPostsQuery } from '@services/rootApi';
+import Loading from './Loading';
+import Post from './Post';
 
 const PostList = () => {
   const { data, isSuccess, isFetching, isError, error } = useGetPostsQuery();
@@ -12,13 +14,13 @@ const PostList = () => {
     error,
   });
   console.log(data);
+
+  if (isFetching) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      {/* {isFetching && <p>Loading posts...</p>}
-      {isError && (
-        <p>Error loading posts: {error?.data?.message || error?.message}</p>
-      )}
-      {isSuccess && !data?.length && !isFetching && <p>No posts available.</p>} */}
       {(data || []) &&
         data?.map((post) => (
           <Post
@@ -34,7 +36,6 @@ const PostList = () => {
             }
           />
         ))}
-      <Post />
     </div>
   );
 };

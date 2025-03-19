@@ -7,6 +7,7 @@ import theme from './configs/muiConfig.js';
 import { Provider } from 'react-redux';
 import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import Loading from '@components/Loading';
 
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <PersistGate loading={<p>loading...</p>} persistor={persistor}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
       <ThemeProvider theme={theme}>
         {/* <ModalProvider> */}
         <RouterProvider router={router}></RouterProvider>

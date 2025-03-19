@@ -25,7 +25,7 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
     result?.error?.data?.message === 'Token has expired.'
   ) {
     const refreshToken = api.getState().auth.refreshToken;
-    console.log('🔄 Refresh token before API call:', refreshToken);
+    console.log('Refresh token before API call:', refreshToken);
 
     if (refreshToken) {
       const refreshResult = await baseQuery(
@@ -49,16 +49,14 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
         );
 
         result = await baseQuery(args, api, extraOptions);
+      } else {
+        api.dispatch(logOut());
+        window.location.href = '/login';
       }
-      // else {
-      //   api.dispatch(logOut());
-      //   window.location.href = '/login';
-      // }
+    } else {
+      api.dispatch(logOut());
+      window.location.href = '/login';
     }
-    // else {
-    //   api.dispatch(logOut());
-    //   window.location.href = '/login';
-    // }
     console.log({ result });
   }
   return result;
@@ -125,8 +123,8 @@ export const rootApi = createApi({
         query: () => {
           return '/posts';
         },
+        providesTags: ['Posts'], // Gắn tag 'Posts' cho query này
       }),
-      providesTags: ['Posts'], // Gắn tag 'Posts' cho query này
     };
   },
 });

@@ -24,18 +24,6 @@ const NewPostDialog = ({ userInfo }) => {
 
   const dispatch = useDispatch();
 
-  // const handelCreateNewPost = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('content', content),
-  //       formData.append('image', image),
-  //       await createNewPost({ formData }).unwrap(); // thực hiện thành công rồi mới tới các bước tiếp theo
-  //     dispatch(closeDialog());
-  //     dispatch(openSnackbar({ message: 'Create Post Successfully!' }));
-  //   } catch (err) {
-  //     dispatch(openSnackbar({ type: 'error', message: err?.data?.message }));
-  //   }
-  // };
   const handelCreateNewPost = async () => {
     try {
       const formData = new FormData();

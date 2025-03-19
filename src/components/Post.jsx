@@ -1,13 +1,13 @@
 import { Comment, ThumbUp } from '@mui/icons-material';
-import { Avatar, Button } from '@mui/material';
+import { Avatar, Button, Divider } from '@mui/material';
 import dayjs from 'dayjs';
 import React from 'react';
 
 const Post = ({
-  fullName = 'Lê Quang Trọng Nghĩa',
+  fullName = '',
   createAt = new Date(),
-  content = 'Goal of football',
-  image = 'https://assets.goal.com/images/v3/blt2aaca933046f8b00/Cristiano%20Ronaldo%20Portugal%202024%20(4).jpg?auto=webp&format=pjpg&width=3840&quality=60',
+  content = '',
+  image = '',
   likes = [],
   comments = [],
 }) => {
@@ -30,8 +30,12 @@ const Post = ({
           </p>
         </div>
       </div>
-      <p className="!mb-1">{content}</p>
-      {image && <img src={image} />}
+      <p className="!mb-2">{content}</p>
+      {image && (
+        <div className="flex justify-center">
+          <img src={image} />
+        </div>
+      )}
       <div className="!my-2 flex items-center justify-between">
         <div className="flex items-center gap-1 text-sm">
           <ThumbUp fontSize="small" className="text-primary-main" />
