@@ -120,10 +120,15 @@ export const rootApi = createApi({
         invalidatesTags: ['Posts'], // Invalidates cache của tag 'Posts' khi mutation thành công
       }),
       getPosts: builder.query({
-        query: () => {
-          return '/posts';
+        query: ({ limit, offset } = {}) => {
+          return {
+            url: '/posts',
+            // method: "GET",
+            params: { limit, offset },
+          };
         },
-        providesTags: ['Posts'], // Gắn tag 'Posts' cho query này
+        providesTags: ['Posts'],
+        // providesTags: [{ type: 'Posts' }], // Gắn tag 'Posts' cho query này
       }),
     };
   },

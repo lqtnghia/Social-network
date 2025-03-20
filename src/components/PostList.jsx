@@ -1,28 +1,15 @@
 import React from 'react';
-
-import { useGetPostsQuery } from '@services/rootApi';
 import Loading from './Loading';
 import Post from './Post';
+import { useLazyLoadPosts } from '@hooks/index';
 
 const PostList = () => {
-  const { data, isSuccess, isFetching, isError, error } = useGetPostsQuery();
-  console.log('Data from useGetPostsQuery:', {
-    data,
-    isSuccess,
-    isFetching,
-    isError,
-    error,
-  });
-  console.log(data);
-
-  if (isFetching) {
-    return <Loading />;
-  }
+  const { isFetching, posts } = useLazyLoadPosts();
 
   return (
     <div className="flex flex-col gap-4">
-      {(data || []) &&
-        data?.map((post) => (
+      {(posts || []) &&
+        posts?.map((post) => (
           <Post
             key={post.id}
             fullName={post.fullName}
@@ -36,6 +23,7 @@ const PostList = () => {
             }
           />
         ))}
+      {isFetching && <Loading />}
     </div>
   );
 };

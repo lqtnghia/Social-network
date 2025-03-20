@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { closeDialog } from '@redux/slices/dialogSlice';
 import { openSnackbar } from '@redux/slices/snackbarSlice';
-import { useCreatePostMutation } from '@services/rootApi';
+import { useCreatePostMutation, useGetPostsQuery } from '@services/rootApi';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -21,7 +21,7 @@ const NewPostDialog = ({ userInfo }) => {
     useCreatePostMutation();
 
   const [content, setContent] = useState('');
-
+  const { refetch } = useGetPostsQuery(); // Lấy refetch
   const dispatch = useDispatch();
 
   const handelCreateNewPost = async () => {
@@ -34,6 +34,7 @@ const NewPostDialog = ({ userInfo }) => {
         formData.append('image', image); // Chỉ append image nếu nó tồn tại và là file
       }
       const response = await createNewPost(formData).unwrap();
+      refetch();
       console.log('Response from server:', response);
       dispatch(closeDialog());
       dispatch(openSnackbar({ message: 'Create Post Successfully!' }));
