@@ -24,3 +24,18 @@ body {
   --color-primary-main: #246aa3;
   --font-size-10: 10px;
 }
+
+@layer components {
+  .card {
+    @apply rounded bg-white !p-4 shadow;
+  }
+  /* .container {
+    @apply mx-auto flex max-w-6xl gap-4 !p-6;
+  } */
+}
+
+@layer pages {
+  .container {
+    @apply !mx-auto flex max-w-6xl gap-4 !p-6;
+  }
+}

@@ -65,7 +65,7 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
 export const rootApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithForceReauth,
-  tagTypes: ['Posts'], // Định nghĩa tag cho posts
+  tagTypes: ['POSTS', 'USERS'], // Định nghĩa tag cho posts
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -117,7 +117,7 @@ export const rootApi = createApi({
             method: 'POST',
           };
         },
-        invalidatesTags: ['Posts'], // Invalidates cache của tag 'Posts' khi mutation thành công
+        invalidatesTags: ['POSTS'], // Invalidates cache của tag 'Posts' khi mutation thành công
       }),
       getPosts: builder.query({
         query: ({ limit, offset } = {}) => {
@@ -127,8 +127,25 @@ export const rootApi = createApi({
             params: { limit, offset },
           };
         },
-        providesTags: ['Posts'],
-        // providesTags: [{ type: 'Posts' }], // Gắn tag 'Posts' cho query này
+        // providesTags: ['POSTS'],
+        providesTags: [{ type: 'POSTS' }], // Gắn tag 'Posts' cho query này
+      }),
+      searchUsers: builder.query({
+        query: ({ limit, offset, searchQuery } = {}) => {
+          const encodedQuery = encodeURIComponent(searchQuery.trim());
+          return {
+            url: `/search/users/${encodedQuery}`,
+            // method: 'GET',
+            params: { limit, offset },
+          };
+        },
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.users.map(({ _id }) => ({ type: 'USERS', id: _id })),
+                { type: 'USERS', id: 'LIST' },
+              ]
+            : [{ type: 'USERS', id: 'LIST' }],
       }),
     };
   },
@@ -142,5 +159,6 @@ export const {
   useCreatePostMutation,
   useRefreshTokenMutation,
   useGetPostsQuery,
+  useSearchUsersQuery,
 } = rootApi;
 // khi các hook được sử dụng trong component thì rtk sẽ gọi baseQueryWithForceLogout

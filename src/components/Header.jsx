@@ -25,10 +25,12 @@ import {
 import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   const userInfo = useUserInfo();
   const { logOut } = useLogout();
   const { isMinimizeLayout } = useDetectLayout();
@@ -62,8 +64,8 @@ const Header = () => {
   console.log(userInfo);
   return (
     <div className="flex">
-      <AppBar color="white" position="static" className="!py-4">
-        <Toolbar className="!min-h-fit justify-between">
+      <AppBar color="white" position="static">
+        <Toolbar className="container !min-h-fit justify-between">
           {isMinimizeLayout ? (
             <IconButton onClick={() => dispatch(toggleDrawer())}>
               <MenuIcon />
@@ -83,6 +85,19 @@ const Header = () => {
                   slotProps={{
                     input: { className: 'h-10 px-3 py-2' },
                     htmlInput: { className: '!p-0' },
+                  }}
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      navigate('/search/users', {
+                        state: {
+                          searchTerm,
+                        },
+                      });
+                    }
                   }}
                   sx={{
                     '.MuiInputBase-root::before': {

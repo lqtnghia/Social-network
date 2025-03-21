@@ -36,7 +36,7 @@ export const useDetectLayout = () => {
 
 export const useLazyLoadPosts = () => {
   const [offset, setOffset] = useState(0);
-  const limit = 10;
+  const limit = 11;
   const [posts, setPosts] = useState([]);
   const { data, isSuccess, isFetching } = useGetPostsQuery(
     {
@@ -55,11 +55,7 @@ export const useLazyLoadPosts = () => {
       }
       previousDataRef.current = data;
       setPosts((prevPosts) => {
-        // Loại bỏ trùng lặp dựa trên post.id
-        const newPosts = data.filter(
-          (newPost) => !prevPosts.some((post) => post.id === newPost.id),
-        );
-        return [...prevPosts, ...newPosts];
+        return [...prevPosts, ...data];
       });
     }
   }, [isSuccess, data]);
