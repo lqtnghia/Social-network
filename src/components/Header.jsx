@@ -65,7 +65,10 @@ const Header = () => {
   return (
     <div className="flex">
       <AppBar color="white" position="static">
-        <Toolbar className="container !min-h-fit justify-between">
+        <Toolbar
+          className="container !min-h-fit justify-between"
+          aria-hidden={false}
+        >
           {isMinimizeLayout ? (
             <IconButton onClick={() => dispatch(toggleDrawer())}>
               <MenuIcon />
@@ -144,15 +147,11 @@ const Header = () => {
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}
               <Avatar className="!bg-primary-main">
-                {
-                  userInfo?.fullName
-                    ? userInfo.fullName
-                        .split(' ') // Tách chuỗi thành mảng các từ
-                        .slice(-1)[0] // Lấy từ cuối cùng
-                        .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
-                        .toUpperCase() // Chuyển thành in hoa
-                    : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
-                }
+                {userInfo.fullName
+                  .split(' ')
+                  .slice(-1)[0]
+                  .charAt(0)
+                  .toUpperCase()}
               </Avatar>
             </IconButton>
           </div>
