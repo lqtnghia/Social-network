@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import { openDialog } from '@redux/slices/dialogSlice';
+import { useCreatePostMutation } from '@services/rootApi';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,6 +65,8 @@ export const ImageUploader = ({ image, setImage }) => {
 const PostCreation = () => {
   const userInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const [createNewPost, { data, isSuccess, isLoading }] =
+    useCreatePostMutation();
 
   return (
     <div className="rounded bg-white shadow">
@@ -84,15 +87,6 @@ const PostCreation = () => {
                 title: 'Create Post ',
                 contentType: 'NEW_POST_DIALOG',
                 additionalData: userInfo,
-                // actions: (
-                //   <Button
-                //     variant="contained"
-                //     color="primary"
-                //     onClick={() => dispatch(closeDialog())}
-                //   >
-                //     Post
-                //   </Button>
-                // ),
               }),
             );
           }}

@@ -8,7 +8,7 @@ const ProtectedLayout = () => {
   const response = useGetAuthUserQuery(undefined, {
     refetchOnMountOrArgChange: true, // Đảm bảo gọi lại khi refresh trang
   });
-  console.log('Response from useGetAuthUserQuery:', response);
+  // console.log('Response from useGetAuthUserQuery:', response);
 
   if (response.isLoading) {
     return <Loading />;

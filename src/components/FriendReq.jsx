@@ -8,11 +8,7 @@ const FriendReq = ({ fullName = '', image }) => {
         {image ? (
           <img src={image} />
         ) : (
-          fullName
-            .split(' ') // Tách chuỗi thành mảng các từ
-            .slice(-1)[0] // Lấy từ cuối cùng
-            .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
-            .toUpperCase() // Chuyển thành in hoa
+          fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()
         )}
       </Avatar>
 

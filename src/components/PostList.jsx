@@ -1,15 +1,17 @@
 import React from 'react';
 import Loading from './Loading';
 import Post from './Post';
-import { useLazyLoadPosts } from '@hooks/index';
+import { useGetPostsQuery } from '@services/rootApi';
 
 const PostList = () => {
-  const { isFetching, posts } = useLazyLoadPosts();
+  const { data, isFetching } = useGetPostsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <div className="flex flex-col gap-4">
-      {(posts || []) &&
-        posts?.map((post) => (
+      {(data || []) &&
+        data?.map((post) => (
           <Post
             key={post.id}
             fullName={post.fullName}

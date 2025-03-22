@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { closeDialog } from '@redux/slices/dialogSlice';
 import { openSnackbar } from '@redux/slices/snackbarSlice';
-import { useCreatePostMutation, useGetPostsQuery } from '@services/rootApi';
+import { useCreatePostMutation, rootApi } from '@services/rootApi';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -17,38 +17,34 @@ const NewPostDialog = ({ userInfo }) => {
   const [image, setImage] = useState(null);
 
   // eslint-disable-next-line no-unused-vars
-  const [createNewPost, { data = {}, isSuccess, isLoading }] =
+  const [createNewPost, { data, isSuccess, isLoading }] =
     useCreatePostMutation();
 
   const [content, setContent] = useState('');
-  const { refetch } = useGetPostsQuery(); // Lấy refetch
   const dispatch = useDispatch();
 
   const handelCreateNewPost = async () => {
     try {
       const formData = new FormData();
-      console.log('Content before append:', content); // Log để kiểm tra
-      console.log('Image before append:', image); // Log để kiểm tra (phải là file)
-      formData.append('content', content || ''); // Đảm bảo content luôn có giá trị
-      if (image) {
-        formData.append('image', image); // Chỉ append image nếu nó tồn tại và là file
-      }
-      const response = await createNewPost(formData).unwrap();
-      refetch();
-      console.log('Response from server:', response);
+      formData.append('content', content);
+      formData.append('image', image);
+
+      console.log('Dữ liệu gửi đi:', { content, image });
+      const result = await createNewPost(formData).unwrap();
+      console.log('Phản hồi từ createPost:', result);
+
+      //qt
+      dispatch(
+        rootApi.endpoints.getPosts.initiate(undefined, { forceRefetch: true }),
+      );
+
       dispatch(closeDialog());
       dispatch(openSnackbar({ message: 'Create Post Successfully!' }));
     } catch (err) {
-      console.error('Error during post creation:', err);
-      dispatch(
-        openSnackbar({
-          type: 'error',
-          message: err?.data?.message || 'Failed to create post',
-        }),
-      );
+      console.error('Lỗi khi tạo bài đăng:', err);
+      dispatch(openSnackbar({ type: 'error', message: err?.data?.message }));
     }
   };
-
   const isValid = !!(content || image);
 
   return (
@@ -59,15 +55,7 @@ const NewPostDialog = ({ userInfo }) => {
             className="!bg-primary-main"
             sx={{ width: '32px', height: '32px' }}
           >
-            {
-              userInfo?.fullName
-                ? userInfo.fullName
-                    .split(' ') // Tách chuỗi thành mảng các từ
-                    .slice(-1)[0] // Lấy từ cuối cùng
-                    .charAt(0) // Lấy ký tự đầu tiên của từ cuối cùng
-                    .toUpperCase() // Chuyển thành in hoa
-                : '' // Giá trị mặc định nếu userInfo hoặc fullName không tồn tại
-            }
+            {userInfo.fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
           </Avatar>
           <p>{userInfo?.fullName}</p>
         </div>

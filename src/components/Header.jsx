@@ -61,7 +61,7 @@ const Header = () => {
   const handleUserProfileClick = (e) => {
     setAnchorEl(e.target);
   };
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <div className="flex">
       <AppBar color="white" position="static">
@@ -125,16 +125,6 @@ const Header = () => {
                   <Storefront />
                 </IconButton>
               </div>
-              {/* <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
-              <IconButton size="medium">
-                <Group />
-              </IconButton>
-            </div>
-            <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
-              <IconButton size="medium">
-                <SportsEsports />
-              </IconButton>
-            </div> */}
             </div>
           )}
 

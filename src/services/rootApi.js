@@ -5,7 +5,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_BASE_URL,
   // prepareHeaders: Hàm này cho phép tùy chỉnh các header của yêu cầu HTTP trước khi gửi đi.
   prepareHeaders: (headers, { getState }) => {
-    console.log({ store: getState() });
+    // console.log({ store: getState() });
     const token = getState().auth.accessToken;
     // console.log('Access token:', token);
     if (token) {
@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithForceReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  console.log('baseQueryWithForceReauth', { result });
+  // console.log('baseQueryWithForceReauth', { result });
 
   if (
     result?.error?.status === 401 &&
@@ -65,7 +65,6 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
 export const rootApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithForceReauth,
-  tagTypes: ['POSTS', 'USERS'], // Định nghĩa tag cho posts
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -117,35 +116,32 @@ export const rootApi = createApi({
             method: 'POST',
           };
         },
-        invalidatesTags: ['POSTS'], // Invalidates cache của tag 'Posts' khi mutation thành công
+        invalidatesTags: ['POSTS'],
+        onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+          try {
+            await queryFulfilled;
+            console.log('createPost thành công, invalidating tag POSTS');
+          } catch (err) {
+            console.error('createPost thất bại:', err);
+          }
+        },
       }),
       getPosts: builder.query({
-        query: ({ limit, offset } = {}) => {
+        query: () => {
           return {
             url: '/posts',
-            // method: "GET",
-            params: { limit, offset },
           };
         },
-        // providesTags: ['POSTS'],
-        providesTags: [{ type: 'POSTS' }], // Gắn tag 'Posts' cho query này
-      }),
-      searchUsers: builder.query({
-        query: ({ limit, offset, searchQuery } = {}) => {
-          const encodedQuery = encodeURIComponent(searchQuery.trim());
-          return {
-            url: `/search/users/${encodedQuery}`,
-            // method: 'GET',
-            params: { limit, offset },
-          };
+        providesTags: ['POSTS'],
+        onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+          console.log('getPosts được gọi');
+          try {
+            const { data } = await queryFulfilled;
+            console.log('Dữ liệu từ getPosts:', data);
+          } catch (err) {
+            console.error('getPosts thất bại:', err);
+          }
         },
-        providesTags: (result) =>
-          result
-            ? [
-                ...result.users.map(({ _id }) => ({ type: 'USERS', id: _id })),
-                { type: 'USERS', id: 'LIST' },
-              ]
-            : [{ type: 'USERS', id: 'LIST' }],
       }),
     };
   },
@@ -157,8 +153,6 @@ export const {
   useVerifyOTPMutation,
   useGetAuthUserQuery,
   useCreatePostMutation,
-  useRefreshTokenMutation,
   useGetPostsQuery,
-  useSearchUsersQuery,
 } = rootApi;
 // khi các hook được sử dụng trong component thì rtk sẽ gọi baseQueryWithForceLogout

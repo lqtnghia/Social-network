@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Loading from '@components/Loading';
-import SearchUsersPage from '@pages/SearchUsersPage';
 
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
           {
             path: '/messages',
             element: <MessagePage />,
-          },
-          {
-            path: '/search/users',
-            element: <SearchUsersPage />,
           },
         ],
       },

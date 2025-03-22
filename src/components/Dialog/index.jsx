@@ -2,7 +2,6 @@ import { DialogTitle, IconButton, Dialog as MUIDialog } from '@mui/material';
 import { closeDialog } from '@redux/slices/dialogSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Close } from '@mui/icons-material';
 import NewPostDialog from './configs/NewPostDialog';
 import LiveDialog from './configs/LiveDialog';
