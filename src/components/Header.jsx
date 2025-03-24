@@ -149,7 +149,7 @@ const Header = () => {
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}
               <Avatar className="!bg-primary-main">
-                {userInfo.fullName
+                {userInfo?.fullName
                   .split(' ')
                   .slice(-1)[0]
                   .charAt(0)

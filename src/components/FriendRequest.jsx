@@ -1,17 +1,31 @@
 import React from 'react';
-import FriendReq from './FriendReq';
+import FriendRequestItem from './FriendRequestItem';
+import { useGetPendingFriendRequestsQuery } from '@services/rootApi';
+import { useState } from 'react';
 
 const FriendRequest = () => {
+  const [showAll, setShowAll] = useState(false);
+  const { data = [] } = useGetPendingFriendRequestsQuery();
+  console.log(data);
   return (
-    <div className="rounded bg-white !p-4 shadow">
+    <div className="card">
       <div className="!mb-2 flex justify-between">
         <p>Friend requests</p>
-        <p className="text-primary-main hover:cursor-pointer">See all</p>
+        <p
+          className="text-primary-main hover:cursor-pointer"
+          onClick={() => setShowAll(!showAll)}
+        >
+          {showAll ? 'Show Less' : 'Show All'}
+        </p>
       </div>
-      <div className="flex flex-col">
-        <FriendReq fullName="Phan Quốc Lập" image="/l.jpg" />
-        <FriendReq fullName="Nguyễn Khánh Duy" image="/d.jpg" />
-        <FriendReq fullName="Nguyễn Quang Hùng" image="/h.jpg" />
+      <div className="!space-y-4">
+        {(showAll ? data : data.slice(0, 3)).map((request) => (
+          <FriendRequestItem
+            fullName={request.sender.fullName}
+            key={request.sender.id}
+            id={request.sender.id}
+          />
+        ))}
       </div>
     </div>
   );

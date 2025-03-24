@@ -6,12 +6,14 @@ import Sidebar from '@components/Sidebar';
 function HomePage() {
   return (
     <div className="container">
-      <Sidebar />
+      <div className="flex-1">
+        <Sidebar />
+      </div>
       <div className="flex flex-2 flex-col gap-4">
         <PostCreation />
         <PostList />
       </div>
-      <div className="hidden w-64 flex-[0.7] sm:block">
+      <div className="hidden w-64 flex-1 sm:block">
         <FriendRequest />
       </div>
     </div>

@@ -60,7 +60,7 @@ const baseQueryWithForceReauth = async (args, api, extraOptions) => {
 export const rootApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithForceReauth,
-  tagTypes: ['POSTS', 'USERS'], // Định nghĩa tagTypes
+  tagTypes: ['POSTS', 'USERS', 'PENDING_FRIEND_REQUEST'], // Định nghĩa tagTypes
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -159,7 +159,28 @@ export const rootApi = createApi({
           };
         },
         // args chính là userId
-        invalidatesTags: (result, error, args) => [{ type: 'USERS', id: args }],
+        invalidatesTags: (result, error, args) => [
+          { type: 'USERS', id: args },
+          { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
+        ],
+      }),
+      getPendingFriendRequests: builder.query({
+        query: () => {
+          return {
+            url: `/friends/pending`,
+          };
+        },
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.map(({ id }) => ({
+                  type: 'PENDING_FRIEND_REQUEST',
+                  id,
+                })),
+                { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
+              ]
+            : [{ type: 'PENDING_FRIEND_REQUEST', id: 'LIST' }],
+        // refetchOnMountOrArgChange: true,
       }),
     };
   },
@@ -174,4 +195,5 @@ export const {
   useGetPostsQuery,
   useSearchUsersQuery,
   useSendFriendRequestMutation,
+  useGetPendingFriendRequestsQuery,
 } = rootApi;

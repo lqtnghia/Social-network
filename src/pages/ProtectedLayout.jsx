@@ -1,5 +1,6 @@
 import Header from '@components/Header';
 import Loading from '@components/Loading';
+import SocketProvider from '@context/SocketProvider';
 import { useGetAuthUserQuery } from '@services/rootApi';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -26,10 +27,12 @@ const ProtectedLayout = () => {
 
   return (
     <div>
-      <Header />
-      <div className="bg-dark-200">
-        <Outlet />
-      </div>
+      <SocketProvider>
+        <Header />
+        <div className="bg-dark-200">
+          <Outlet />
+        </div>
+      </SocketProvider>
     </div>
   );
 };
