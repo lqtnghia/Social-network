@@ -1,4 +1,6 @@
-import { useDetectLayout, useUserInfo, useLogout } from '@hooks/index';
+import { useDetectLayout } from '@hooks/useDetectLayout';
+import { useLogout } from '@hooks/useLogout';
+import { useUserInfo } from '@hooks/useUserInfo';
 import {
   AccountCircle,
   Notifications,

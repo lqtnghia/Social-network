@@ -1,38 +1,51 @@
 import UserCard from '@components/UserCard';
-import { useUserInfo } from '@hooks/index';
 import { useSearchUsersQuery } from '@services/rootApi';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const SearchUsersPage = () => {
   const location = useLocation();
-  const { _id } = useUserInfo();
+  const searchQuery = location?.state?.searchTerm || '';
+  console.log('Search term:', searchQuery);
 
-  // eslint-disable-next-line no-unused-vars
-  const { data, isFetching } = useSearchUsersQuery({
-    limit: 11,
+  if (!searchQuery) {
+    return (
+      <div className="container flex-col">
+        <p className="text-xl font-bold">Search</p>
+        <p>Please enter a search term to find users.</p>
+      </div>
+    );
+  }
+
+  const { data, isFetching, error } = useSearchUsersQuery({
+    limit: 10,
     offset: 0,
-    searchQuery: location?.state?.searchTerm,
+    searchQuery,
   });
+  console.log('API response:', { data, error });
 
-  console.log(data);
   return (
     <div className="container flex-col">
       <p className="text-xl font-bold">Search</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {(data?.users || []).map((user) => (
-          <UserCard
-            key={user._id}
-            fullName={user.fullName}
-            isFriend={user.isFriend.includes(_id)}
-          />
-        ))}
-        {/* <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard /> */}
+        {isFetching ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error?.data?.message || 'An error occurred'}</p>
+        ) : (data?.users || []).length > 0 ? (
+          (data?.users || []).map((user) => (
+            <UserCard
+              key={user.id}
+              id={user.id}
+              fullName={user.fullName}
+              isFriend={user.isFriend}
+              requestSent={user.requestSent}
+              requestReceived={user.requestReceived}
+            />
+          ))
+        ) : (
+          <p>No users found.</p>
+        )}
       </div>
     </div>
   );

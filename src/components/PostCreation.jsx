@@ -11,7 +11,6 @@ import {
   TextField,
 } from '@mui/material';
 import { openDialog } from '@redux/slices/dialogSlice';
-import { useCreatePostMutation } from '@services/rootApi';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,8 +64,6 @@ export const ImageUploader = ({ image, setImage }) => {
 const PostCreation = () => {
   const userInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  const [createNewPost, { data, isSuccess, isLoading }] =
-    useCreatePostMutation();
 
   return (
     <div className="rounded bg-white shadow">
@@ -102,6 +99,7 @@ const PostCreation = () => {
             px: '2px',
           }}
         />
+        {/* Live video - Photo/ video - Feeling/ activity */}
         <div className="flex items-center justify-center !p-2">
           <div className="flex flex-1 justify-center">
             <IconButton

@@ -106,6 +106,7 @@ import { useDispatch } from 'react-redux';
 
 const NewPostDialog = ({ userInfo }) => {
   const [image, setImage] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [createNewPost, { data, isSuccess, isLoading }] =
     useCreatePostMutation();
   const [content, setContent] = useState('');

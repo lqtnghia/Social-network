@@ -12,7 +12,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDetectLayout } from '@hooks/index';
+import { useDetectLayout } from '@hooks/useDetectLayout';
 
 // const ListStyled = styled(List)`
 // padding: 16px 12px
