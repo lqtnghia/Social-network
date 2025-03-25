@@ -66,7 +66,7 @@ const PostCreation = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="rounded bg-white shadow">
+    <div className="bg-primary-dark rounded shadow">
       <div className="flex gap-2 !p-4">
         <Avatar className="!bg-primary-main">
           {userInfo?.fullName
@@ -74,9 +74,12 @@ const PostCreation = () => {
             : ''}
         </Avatar>
         <TextField
-          className="flex-1"
+          className="bg-primary-bgdark flex-1"
           size="small"
           placeholder="What's on your mind?"
+          inputProps={{
+            className: 'placeholder:text-slate-100',
+          }}
           onClick={() => {
             dispatch(
               openDialog({
@@ -100,7 +103,7 @@ const PostCreation = () => {
           }}
         />
         {/* Live video - Photo/ video - Feeling/ activity */}
-        <div className="flex items-center justify-center !p-2">
+        <div className="text-text-bgdark flex items-center justify-center !p-2">
           <div className="flex flex-1 justify-center">
             <IconButton
               className="flex w-full gap-1"
@@ -115,19 +118,19 @@ const PostCreation = () => {
               }}
             >
               <Videocam color="error" />
-              <p className="text-sm">Live video</p>
+              <p className="text-text-bgdark text-sm">Live video</p>
             </IconButton>
           </div>
           <div className="flex flex-1 justify-center">
             <IconButton className="flex w-full gap-1">
               <Collections color="success" />
-              <p className="text-sm">Photo/video</p>
+              <p className="text-text-bgdark text-sm">Photo/video</p>
             </IconButton>
           </div>
           <div className="flex flex-1 justify-center">
             <IconButton className="flex w-full gap-1">
               <InsertEmoticon color="warning" />
-              <p className="text-sm">Feeling/activity</p>
+              <p className="text-text-bgdark text-sm">Feeling/activity</p>
             </IconButton>
           </div>
         </div>

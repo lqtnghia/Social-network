@@ -12,7 +12,7 @@ const Post = ({
   comments = [],
 }) => {
   return (
-    <div className="rounded bg-white !p-4 shadow">
+    <div className="bg-primary-dark rounded !p-4 shadow">
       <div className="!mb-3 flex gap-3">
         <Avatar className="!bg-primary-main">
           {fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}

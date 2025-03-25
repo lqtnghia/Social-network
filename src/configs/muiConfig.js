@@ -3,7 +3,10 @@ import { createTheme } from '@mui/material';
 const theme = {
   palette: {
     primary: {
-      main: '#246AA3',
+      main: '#1E74FD',
+      // dark: '#293145',
+      bgdark: '#1a2236',
+      textdark: '#ddd',
     },
   },
   breakpoints: {

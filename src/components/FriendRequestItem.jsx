@@ -4,7 +4,7 @@ import React from 'react';
 
 const FriendRequestItem = ({ fullName = '' }) => {
   return (
-    <div className="flex flex-col gap-2 rounded bg-slate-200 !p-3">
+    <div className="bg-primary-dark flex flex-col gap-2 rounded !p-3">
       <div className="flex gap-2">
         <div>
           <Avatar className="!bg-primary-main">

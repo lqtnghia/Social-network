@@ -11,7 +11,7 @@ const PostList = () => {
       {(posts || []).map((post) => (
         <Post
           key={post.id}
-          fullName={post.fullName}
+          fullName={post.author.fullName}
           createAt={post.createdAt}
           content={post.content}
           image={post.image ? `http://localhost:4010${post.image}` : null}

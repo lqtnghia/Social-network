@@ -17,6 +17,7 @@ const SearchUsersPage = () => {
     );
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data, isFetching, error } = useSearchUsersQuery({
     limit: 10,
     offset: 0,
@@ -25,7 +26,7 @@ const SearchUsersPage = () => {
   console.log('API response:', { data, error });
 
   return (
-    <div className="container flex-col">
+    <div className="bg-primary-bgdark container flex-col">
       <p className="text-xl font-bold">Search</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {isFetching ? (

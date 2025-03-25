@@ -1,14 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 @import 'tailwindcss';
 @import 'tailwindcss/preflight'; /* Thay thế @tailwind base */
 @import 'tailwindcss/utilities'; /* Không cần @tailwind components nữa */
 
-body {
-  font-family: 'Public Sans Variable', sans-serif;
-}
-
 @theme {
-  --color-primary-main: #246aa3;
+  --color-primary-main: #1e74fd;
+  --color-primary-dark: #293145;
+  --color-primary-bgdark: #1a2236;
   --color-primary-header: #333334;
+  --color-text-bgdark: #ddd;
   --color-dark: #000000;
   --color-dark-100: #4b465c;
   --color-dark-200: #f8f7fa;
@@ -17,17 +17,17 @@ body {
   --font-size-10: 10px;
 }
 
-:root {
-  --color-dark: #000000;
-  --color-dark-100: #4b465c;
-  --color-dark-200: #f8f7fa;
-  --color-primary-main: #246aa3;
-  --font-size-10: 10px;
+body {
+  font-family: 'Public Sans Variable', sans-serif;
+  color: #ddd;
 }
 
 @layer components {
   .card {
-    @apply rounded bg-white !p-4 shadow;
+    @apply bg-primary-dark rounded !p-4 shadow;
+  }
+  .icon {
+    @apply !mr-2 rounded-4xl !p-3;
   }
   /* .container {
     @apply mx-auto flex max-w-6xl gap-4 !p-6;
@@ -36,6 +36,6 @@ body {
 
 @layer pages {
   .container {
-    @apply !mx-auto flex max-w-6xl gap-4 !p-6;
+    @apply flex w-full justify-between gap-4 !p-6;
   }
 }

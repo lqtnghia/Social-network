@@ -12,6 +12,7 @@ export const useLazyLoadPosts = () => {
     { offset, limit },
     { refetchOnMountOrArgChange: true },
   );
+  console.log(data);
   const previousDataRef = useRef();
 
   useEffect(() => {

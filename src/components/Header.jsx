@@ -13,12 +13,15 @@ import {
   Storefront,
   Group,
   SportsEsports,
+  Settings,
+  ElectricBolt,
 } from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
   Badge,
   IconButton,
+  InputAdornment,
   Menu,
   MenuItem,
   TextField,
@@ -27,7 +30,7 @@ import {
 import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,8 +67,15 @@ const Header = () => {
     setAnchorEl(e.target);
   };
   // console.log(userInfo);
+
+  const getNavigate = ({ isActive }) =>
+    `rounded-full px-10 py-2 hover:cursor-pointer  ${
+      isActive
+        ? 'bg-primary-main text-white'
+        : 'hover:bg-slate-400 hover:shadow-sm bg-primary-bgdark'
+    }`;
   return (
-    <div className="flex">
+    <div className="bg-primary-dark flex">
       <AppBar color="white" position="static">
         <Toolbar
           className="container !min-h-fit justify-between"
@@ -76,37 +86,47 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           ) : (
-            <div className="flex flex-1 items-center gap-4">
+            <div className="flex flex-2 items-center gap-4">
               <Link to="/">
-                <img src="/NaLa.png" className="h-12 w-12" />
+                <p className="text-primary-main font-['Fredoka_One'] text-3xl font-bold">
+                  NghiaSocial
+                </p>
               </Link>
-              <div className="flex items-center gap-4">
-                <Search />
+              <div className="!mx-5 flex flex-1 items-center gap-4">
                 <TextField
-                  variant="standard"
+                  className="bg-primary-bgdark rounded-[20px]"
+                  variant="outlined"
                   name="search"
-                  placeholder="search"
+                  placeholder="Search"
                   fullWidth
-                  slotProps={{
-                    input: { className: 'h-10 px-3 py-2' },
-                    htmlInput: { className: '!p-0' },
-                  }}
                   value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                  }}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      navigate('/search/users', {
-                        state: {
-                          searchTerm,
-                        },
-                      });
+                      navigate('/search/users', { state: { searchTerm } });
                     }
                   }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Search className="text-gray-500" />
+                      </InputAdornment>
+                    ),
+                  }}
                   sx={{
-                    '.MuiInputBase-root::before': {
-                      display: 'none',
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: '20px', // Bo góc mềm hơn
+                      borderColor: '#ccc', // Màu viền mặc định
+                      '&:hover fieldset': {
+                        borderColor: 'primary-main', // Đổi màu viền khi hover
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'primary-main', // Màu viền khi focus
+                        borderWidth: '2px',
+                      },
+                    },
+                    '.MuiInputBase-input': {
+                      paddingLeft: '10px', // Giúp chữ không quá sát icon
                     },
                   }}
                 />
@@ -114,37 +134,44 @@ const Header = () => {
             </div>
           )}
           {!isMinimizeLayout && (
-            <div className="flex flex-1 items-center justify-between gap-1">
-              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+            <div className="flex flex-1 items-center justify-start gap-5">
+              <NavLink to="/" className={getNavigate}>
                 <IconButton size="medium">
-                  <Home />
+                  <Home sx={{ color: '#DDD' }} />
                 </IconButton>
-              </div>
-              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+              </NavLink>
+              <NavLink to="/stories" className={getNavigate}>
                 <IconButton size="medium">
-                  <OndemandVideo />
+                  <ElectricBolt sx={{ color: '#DDD' }} />
                 </IconButton>
-              </div>
-              <div className="rounded-sm !px-10 !py-2 hover:cursor-pointer hover:bg-slate-400 hover:shadow-sm">
+              </NavLink>
+              <NavLink to="/Video" className={getNavigate}>
                 <IconButton size="medium">
-                  <Storefront />
+                  <OndemandVideo sx={{ color: '#DDD' }} />
                 </IconButton>
-              </div>
+              </NavLink>
+              <NavLink to="/group" className={getNavigate}>
+                <IconButton size="medium">
+                  <Storefront sx={{ color: '#DDD' }} />
+                </IconButton>
+              </NavLink>
             </div>
           )}
 
           <div className="flex flex-1 justify-end">
             <IconButton size="medium">
-              <Category />
-            </IconButton>
-            <IconButton size="medium">
-              <QuestionAnswer />
-            </IconButton>
-            <IconButton size="medium">
               {isMinimizeLayout && <Search />}
-              <Badge badgeContent={4} color="error">
-                <Notifications />
+              <Badge badgeContent={2} color="error">
+                <Notifications color="primary" />
               </Badge>
+            </IconButton>
+            <IconButton size="medium">
+              <Badge badgeContent={6} color="error">
+                <QuestionAnswer color="primary" />
+              </Badge>
+            </IconButton>
+            <IconButton size="medium">
+              <Settings sx={{ color: '#DDD' }} />
             </IconButton>
             <IconButton size="medium" onClick={handleUserProfileClick}>
               {/* <AccountCircle /> */}

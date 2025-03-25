@@ -8,7 +8,7 @@ const FriendRequest = () => {
   const { data = [] } = useGetPendingFriendRequestsQuery();
   console.log(data);
   return (
-    <div className="card">
+    <div className="card !m-auto w-64">
       <div className="!mb-2 flex justify-between">
         <p>Friend requests</p>
         <p

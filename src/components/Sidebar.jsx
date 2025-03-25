@@ -1,9 +1,14 @@
 import {
-  HomeOutlined,
+  EmojiEvents,
+  Equalizer,
   Hub,
+  InsertDriveFile,
+  Language,
+  LiveTv,
   Lock,
-  Message,
-  People,
+  MailOutline,
+  PinDrop,
+  Settings,
   Translate,
 } from '@mui/icons-material';
 import { Drawer, IconButton, List, ListSubheader } from '@mui/material';
@@ -20,31 +25,99 @@ import { useDetectLayout } from '@hooks/useDetectLayout';
 
 const SidebarContent = () => {
   return (
-    <div className="flex w-64 flex-col gap-4">
-      <List className="flex flex-col gap-4 rounded-sm bg-white !p-4 shadow">
+    <div className="!m-auto flex w-64 flex-col gap-4">
+      <List className="bg-primary-dark flex flex-col gap-4 rounded-sm !p-4 shadow">
+        <ListSubheader className="!bg-primary-dark mb-2 !px-0 !leading-none !text-slate-400">
+          New Feeds
+        </ListSubheader>
         <Link to="/" className="flex items-center gap-1">
-          <HomeOutlined fontSize="small" /> New Feeds
+          <div
+            style={{
+              background: 'linear-gradient(to right, #0575e6, #021b79)',
+            }}
+            className="icon"
+          >
+            <InsertDriveFile fontSize="small" />
+          </div>
+          Newfeeds
         </Link>
-        <Link to="/messages" className="flex items-center gap-1">
-          <Message fontSize="small" /> Messages
+        <Link to="/Badges" className="flex items-center gap-1">
+          <div
+            style={{
+              background: 'linear-gradient(to right, #e44d26, #f16529)',
+            }}
+            className="icon"
+          >
+            <EmojiEvents fontSize="small" />
+          </div>
+          Badges
         </Link>
-        <Link to="/friends" className="flex items-center gap-1">
-          <People fontSize="small" /> Friends
+        <Link to="/Stories" className="flex items-center gap-1">
+          <div
+            style={{
+              background: 'linear-gradient(to right, #f2994a, #f2c94c)',
+            }}
+            className="icon"
+          >
+            <Language fontSize="small" />
+          </div>
+          Explore Stories
         </Link>
         <Link to="/groups" className="flex items-center gap-1">
-          <Hub fontSize="small" /> Groups
+          <div
+            style={{
+              background: 'linear-gradient(to right, #ee0979, #ff6a00)',
+            }}
+            className="icon"
+          >
+            <Hub fontSize="small" />
+          </div>
+          Popuplar Groups
         </Link>
       </List>
-      <List className="flex flex-col gap-4 rounded-sm bg-white !p-4 shadow">
-        <ListSubheader className="mb-2 !px-0 !leading-none">
+      <List className="bg-primary-dark flex flex-col gap-2 rounded-sm !p-4 shadow">
+        <ListSubheader className="!bg-primary-dark mb-2 !px-0 !leading-none !text-slate-400">
+          More Pages
+        </ListSubheader>
+        <Link to="/settings/account" className="flex items-center gap-1">
+          <div className="icon">
+            <MailOutline color="info" fontSize="large" />
+          </div>
+          Email Box
+        </Link>
+        <Link to="/settings/account" className="flex items-center gap-1">
+          <div className="icon">
+            <PinDrop fontSize="large" color="info" />
+          </div>
+          Lastest Event
+        </Link>
+        <Link to="/settings/account" className="flex items-center gap-1">
+          <div className="icon">
+            <LiveTv fontSize="large" color="info" />
+          </div>
+          Live Stream
+        </Link>
+      </List>
+      <List className="bg-primary-dark flex flex-col gap-2 rounded-sm !p-4 shadow">
+        <ListSubheader className="!bg-primary-dark mb-2 !px-0 !leading-none !text-slate-400">
           Settings
         </ListSubheader>
         <Link to="/settings/account" className="flex items-center gap-1">
-          <Lock />
-          Account
+          <div className="icon">
+            <Settings fontSize="medium" />
+          </div>
+          Settings
+        </Link>
+        <Link to="/settings/account" className="flex items-center gap-1">
+          <div className="icon">
+            <Equalizer fontSize="medium" />
+          </div>
+          Analytics
         </Link>
         <Link to="/settings/languages" className="flex items-center gap-1">
-          <Translate />
+          <div className="icon">
+            <Translate fontSize="medium" />
+          </div>
           Languages
         </Link>
       </List>
@@ -70,7 +143,9 @@ const Sidebar = () => {
     >
       <div className="flex justify-between">
         <Link to="/">
-          <img src="/NaLa.png" className="!h-10 w-10" />
+          <p className="text-primary-main font-['Fredoka_One'] text-3xl font-bold">
+            NghiaSocial
+          </p>
         </Link>
         <IconButton onClick={handleCloseSidebar}>
           <CloseIcon />

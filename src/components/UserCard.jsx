@@ -29,7 +29,7 @@ const UserCard = ({
     }
     if (requestReceived) {
       return (
-        <div>
+        <div className="!space-x-1">
           <Button variant="contained" size="small">
             <Check fontSize="small" className="!mr-1" /> Accept
           </Button>
@@ -56,7 +56,7 @@ const UserCard = ({
     );
   }
   return (
-    <div className="card flex flex-col items-center">
+    <div className="card bg-slate- flex flex-col items-center bg-slate-500">
       <Avatar className="!bg-primary-main !mb-3 !h-12 !w-12">
         {fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
       </Avatar>
