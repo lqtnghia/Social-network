@@ -1,28 +1,18 @@
 import FormField from '@components/FormField';
 import { Alert, Button } from '@mui/material';
-import TextInput from '@components/FormInputs/TextInput';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { useRegisterMutation } from '@services/rootApi';
-import { useDispatch } from 'react-redux';
-import { openSnackbar } from '@redux/slices/snackbarSlice';
-import { Password } from '@mui/icons-material';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import TextInput from '@components/FormInputs/TextInput';
+import { useResetPasswordMutation } from '@services/rootApi';
 
-const RegisterPage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [register, { data = {}, isLoading, error, isError, isSuccess }] =
-    useRegisterMutation();
+const ResetPassword = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [resetPassword, { data, isError, error }] = useResetPasswordMutation();
 
   const formSchema = yup.object().shape({
-    fullName: yup.string().required('Full name is required'),
-    email: yup
-      .string()
-      .email('Email is not valid') // Kiểm tra định dạng email tự động
-      .required('Email is required'),
     password: yup
       .string()
       .min(5, 'Password must be at least 5 characters')
@@ -45,44 +35,37 @@ const RegisterPage = () => {
 
   function onSubmit(formData) {
     console.log({ formData });
-    register(formData);
+    resetPassword(formData);
   }
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(openSnackbar({ message: data.message }));
-      navigate('/login');
-    }
-  }, [isSuccess, data.message, dispatch, navigate]);
-
-  console.log(data, isLoading, errors);
   return (
     <div className="rouded !p-4">
-      <p className="!mb-5 text-center text-3xl font-bold">Register</p>
+      <p className="!mb-5 text-center text-3xl font-bold">
+        Change your Password
+      </p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          name="fullName"
-          label="Full Name"
-          control={control}
-          Component={TextInput}
-          error={errors['fullName']}
-          placeholder="Your name"
-        />
-        <FormField
-          name="email"
-          label="Email"
-          control={control}
-          Component={TextInput}
-          error={errors['email']}
-          placeholder="Your Email Address"
-        />
-        <FormField
-          name="password"
-          label="Password"
+          name="old-password"
           control={control}
           Component={TextInput}
           error={errors['password']}
-          placeholder="Password"
+          placeholder="Old Password"
+          type="password"
+        />
+        <FormField
+          name="new-password"
+          control={control}
+          Component={TextInput}
+          error={errors['password']}
+          placeholder="New Password"
+          type="password"
+        />
+        <FormField
+          name="comfirm-new-password"
+          control={control}
+          Component={TextInput}
+          error={errors['password']}
+          placeholder="Comfirm new Password"
           type="password"
         />
         <div className="flex items-center gap-1">
@@ -91,8 +74,9 @@ const RegisterPage = () => {
             Accept Term and Conditions
           </label>
         </div>
+
         <Button variant="contained" type="submit">
-          Sign up
+          Reset my Password
         </Button>
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
       </form>
@@ -107,4 +91,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ResetPassword;

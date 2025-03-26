@@ -9,6 +9,8 @@ import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Loading from '@components/Loading';
 import SearchUsersPage from '@pages/SearchUsersPage';
+import ForgotPage from '@pages/auth/ForgotPage';
+import ResetPassword from '@pages/auth/ResetPassword';
 
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
@@ -52,6 +54,18 @@ const router = createBrowserRouter([
           {
             path: '/login',
             element: <LoginPage />,
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPage />,
+          },
+          {
+            path: '/reset-password',
+            element: <ResetPassword />,
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPage />,
           },
           {
             path: '/verify-otp',

@@ -63,7 +63,9 @@ const LoginPage = () => {
 
   return (
     <div className="rounded !p-4">
-      <p className="mb-5 text-center text-2xl font-bold">Login</p>
+      <p className="!mb-5 text-center text-3xl font-bold">
+        Login into your password
+      </p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
           name="email"
@@ -71,6 +73,7 @@ const LoginPage = () => {
           control={control}
           Component={TextInput}
           error={errors['email']}
+          placeholder="Your Email Address"
         />
         <FormField
           name="password"
@@ -79,16 +82,48 @@ const LoginPage = () => {
           type="password"
           Component={TextInput}
           error={errors['password']}
+          placeholder="Password"
         />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <input type="checkbox" id="remember" />
+            <label htmlFor="remember" className="text-slate-400">
+              Remember me
+            </label>
+          </div>
+          <Link to="/forgot-password" className="text-slate-400">
+            Forgot your Password?
+          </Link>
+        </div>
         <Button variant="contained" type="submit">
           {isLoading && <CircularProgress size="20px" className="mr-1" />}
           Sign in
         </Button>
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
       </form>
-      <p className="!mt-4">
-        New on our platform? <Link to="/register">Create an account</Link>
+      <p className="!mt-4 text-slate-400">
+        Don't have account?{' '}
+        <Link to="/register" className="!text-primary-main font-bold">
+          Register
+        </Link>
       </p>
+      <p className="!my-4 text-center text-slate-400">
+        Or, Sign in with your social account
+      </p>
+      <div className="flex flex-col gap-4">
+        <Button variant="contained" className="flex items-center">
+          <img className="!h-9 !w-9" src="/gg.png" />
+          <span className="flex-1">Sign in with Google</span>
+        </Button>
+        <Button
+          variant="contained"
+          sx={{ background: '#293145' }}
+          className="flex items-center gap-5"
+        >
+          <img className="!h-9 !w-9" src="/fb.png" />
+          <span className="flex-1">Sign in with Facebook</span>
+        </Button>
+      </div>
     </div>
   );
 };
