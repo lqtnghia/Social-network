@@ -41,19 +41,12 @@ const ResetPassword = () => {
   return (
     <div className="rouded !p-4">
       <p className="!mb-5 text-center text-3xl font-bold">
-        Change your Password
+        Reset Your Password
       </p>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          name="old-password"
-          control={control}
-          Component={TextInput}
-          error={errors['password']}
-          placeholder="Old Password"
-          type="password"
-        />
-        <FormField
           name="new-password"
+          label="New Password"
           control={control}
           Component={TextInput}
           error={errors['password']}
@@ -62,6 +55,7 @@ const ResetPassword = () => {
         />
         <FormField
           name="comfirm-new-password"
+          label="Comfirm New Password"
           control={control}
           Component={TextInput}
           error={errors['password']}
@@ -76,7 +70,7 @@ const ResetPassword = () => {
         </div>
 
         <Button variant="contained" type="submit">
-          Reset my Password
+          Reset your Password
         </Button>
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
       </form>

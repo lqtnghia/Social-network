@@ -11,6 +11,8 @@ import Loading from '@components/Loading';
 import SearchUsersPage from '@pages/SearchUsersPage';
 import ForgotPage from '@pages/auth/ForgotPage';
 import ResetPassword from '@pages/auth/ResetPassword';
+import ChangePasswordPage from '@pages/auth/ChangePasswordPage';
+import UserPage from '@pages/UserPage';
 
 const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
             path: '/search/users',
             element: <SearchUsersPage />,
           },
+          {
+            path: '/users',
+            element: <UserPage />,
+          },
         ],
       },
       {
@@ -64,8 +70,8 @@ const router = createBrowserRouter([
             element: <ResetPassword />,
           },
           {
-            path: '/forgot-password',
-            element: <ForgotPage />,
+            path: '/change-password',
+            element: <ChangePasswordPage />,
           },
           {
             path: '/verify-otp',

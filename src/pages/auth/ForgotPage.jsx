@@ -1,20 +1,23 @@
 import FormField from '@components/FormField';
-import { Alert, Button } from '@mui/material';
+import { Alert, Button, CircularProgress } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '@components/FormInputs/TextInput';
 import { useForgotPasswordMutation } from '@services/rootApi';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { openSnackbar } from '@redux/slices/snackbarSlice';
 
 const ForgotPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
-  const [forgotPassword, { data, isError, error }] =
+  const [forgotPassword, { data, isError, error, isSuccess, isLoading }] =
     useForgotPasswordMutation();
-
   const formSchema = yup.object().shape({
-    fullName: yup.string().required('Full name is required'),
     email: yup
       .string()
       .email('Email is not valid') // Kiểm tra định dạng email tự động
@@ -25,19 +28,34 @@ const ForgotPage = () => {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm({
     resolver: yupResolver(formSchema),
     defaultValues: {
-      fullName: '',
       email: '',
-      password: '',
     },
   });
 
   function onSubmit(formData) {
-    console.log({ formData });
+    console.log('Form data:', formData);
     forgotPassword(formData);
   }
+
+  useEffect(() => {
+    console.log('useEffect triggered:', { isSuccess, isError, data, error });
+    if (isError) {
+      dispatch(openSnackbar({ type: 'error', message: error?.data?.message }));
+    }
+    if (isSuccess) {
+      dispatch(openSnackbar({ message: data.message }));
+      navigate('/verify-otp', {
+        state: {
+          email: getValues('email'),
+          flow: 'forgot-password',
+        },
+      });
+    }
+  }, [isError, dispatch, error, data, navigate, isSuccess, getValues]);
 
   return (
     <div className="rouded !p-4">
@@ -53,6 +71,7 @@ const ForgotPage = () => {
         />
 
         <Button variant="contained" type="submit">
+          {isLoading && <CircularProgress size="20px" className="mr-1" />}
           Reset my Password
         </Button>
         {isError && <Alert severity="error">{error?.data?.message}</Alert>}
@@ -60,7 +79,6 @@ const ForgotPage = () => {
       <p className="!mt-4 text-slate-400">
         Already have account?{' '}
         <Link to="/login" className="!text-primary-main font-bold">
-          {' '}
           Login
         </Link>
       </p>

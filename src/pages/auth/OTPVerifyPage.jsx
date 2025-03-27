@@ -24,7 +24,12 @@ const OTPVerifyPage = () => {
 
   function onSubmit(formData) {
     console.log({ formData });
-    verifyOTP({ otp: formData.otp, email: location?.state?.email });
+
+    verifyOTP({
+      otp: formData.otp,
+      email: location?.state?.email,
+      flow: location?.state?.flow,
+    });
   }
   console.log(data);
 
@@ -33,10 +38,22 @@ const OTPVerifyPage = () => {
       dispatch(openSnackbar({ type: 'error', message: error?.data?.message }));
     }
     if (isSuccess) {
-      dispatch(login(data)); //login thừ authSlice //data chứa token
-      navigate('/');
+      const flow = location?.state?.flow;
+      if (flow === 'login') {
+        dispatch(login(data)); //login thừ authSlice //data chứa token
+        navigate('/');
+      } else if (flow === 'forgot-password') {
+        dispatch(openSnackbar({ message: 'OTP verified successfully' }));
+        navigate('/reset-password', {
+          state: { email: location?.state?.email }, // Truyền email để sử dụng ở trang reset-password
+        });
+      } else {
+        // Xử lý trường hợp không xác định được flow
+        dispatch(openSnackbar({ type: 'error', message: 'Invalid flow' }));
+        navigate('/login');
+      }
     }
-  }, [isError, dispatch, error, data, navigate, isSuccess]);
+  }, [isError, dispatch, error, data, navigate, isSuccess, location]);
   console.log(data);
 
   return (

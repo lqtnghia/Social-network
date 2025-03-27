@@ -100,10 +100,10 @@ export const rootApi = createApi({
         },
       }),
       verifyOTP: builder.mutation({
-        query: ({ email, otp }) => {
+        query: ({ email, otp, flow }) => {
           return {
             url: '/verify-otp',
-            body: { email, otp },
+            body: { email, otp, flow },
             method: 'POST',
           };
         },

@@ -56,6 +56,7 @@ const LoginPage = () => {
       navigate('/verify-otp', {
         state: {
           email: getValues('email'),
+          flow: 'login',
         },
       });
     }
