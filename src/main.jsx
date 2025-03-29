@@ -37,6 +37,10 @@ const router = createBrowserRouter([
             element: <HomePage />,
           },
           {
+            path: '/change-password',
+            element: <ChangePasswordPage />,
+          },
+          {
             path: '/messages',
             element: <MessagePage />,
           },
@@ -68,10 +72,6 @@ const router = createBrowserRouter([
           {
             path: '/reset-password',
             element: <ResetPassword />,
-          },
-          {
-            path: '/change-password',
-            element: <ChangePasswordPage />,
           },
           {
             path: '/verify-otp',

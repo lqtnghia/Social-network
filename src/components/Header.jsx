@@ -59,6 +59,9 @@ const Header = () => {
       }}
     >
       <MenuItem>Profile</MenuItem>
+      <MenuItem onClick={() => navigate('/change-password')}>
+        Change Password
+      </MenuItem>
       <MenuItem onClick={() => logOut()}>Logout</MenuItem>
     </Menu>
   );

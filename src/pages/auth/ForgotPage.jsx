@@ -14,7 +14,6 @@ import { openSnackbar } from '@redux/slices/snackbarSlice';
 const ForgotPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
   const [forgotPassword, { data, isError, error, isSuccess, isLoading }] =
     useForgotPasswordMutation();
   const formSchema = yup.object().shape({
