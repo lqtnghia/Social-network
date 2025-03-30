@@ -81,7 +81,7 @@ const ResetPassword = () => {
         }),
       );
     }
-  };
+  }; 
 
   return (
     <div className="rounded !p-4">
