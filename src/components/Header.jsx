@@ -58,7 +58,13 @@ const Header = () => {
         horizontal: 'right',
       }}
     >
-      <MenuItem>Profile</MenuItem>
+      <MenuItem
+        onClick={() => {
+          navigate('/users');
+        }}
+      >
+        Profile
+      </MenuItem>
       <MenuItem onClick={() => navigate('/change-password')}>
         Change Password
       </MenuItem>

@@ -15,44 +15,45 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithForceReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (
-    result?.error?.status === 401 &&
-    result?.error?.data?.message === 'Token has expired.'
-  ) {
-    const refreshToken = api.getState().auth.refreshToken;
-    console.log('Refresh token before API call:', refreshToken);
+  if (result?.error?.status === 401) {
+    if (result?.error?.data?.message === 'Token has expired.') {
+      const refreshToken = api.getState().auth.refreshToken;
+      console.log('Refresh token before API call:', refreshToken);
 
-    if (refreshToken) {
-      const refreshResult = await baseQuery(
-        {
-          url: '/refresh-token',
-          body: { refreshToken },
-          method: 'POST',
-        },
-        api,
-        extraOptions,
-      );
-      console.log({ refreshResult });
-
-      const newAccessToken = refreshResult?.data?.accessToken;
-      if (newAccessToken) {
-        api.dispatch(
-          login({
-            accessToken: newAccessToken,
-            refreshToken,
-          }),
+      if (refreshToken) {
+        const refreshResult = await baseQuery(
+          {
+            url: '/refresh-token',
+            body: { refreshToken },
+            method: 'POST',
+          },
+          api,
+          extraOptions,
         );
+        console.log({ refreshResult });
 
-        result = await baseQuery(args, api, extraOptions);
+        const newAccessToken = refreshResult?.data?.accessToken;
+        if (newAccessToken) {
+          api.dispatch(
+            login({
+              accessToken: newAccessToken,
+              refreshToken,
+            }),
+          );
+
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          api.dispatch(logOut());
+          window.location.href = '/login';
+        }
       } else {
         api.dispatch(logOut());
         window.location.href = '/login';
       }
+      console.log({ result });
     } else {
-      api.dispatch(logOut());
       window.location.href = '/login';
     }
-    console.log({ result });
   }
   return result;
 };

@@ -27,7 +27,7 @@ const Post = ({
       <p className="!mb-2">{content}</p>
       {image && (
         <div className="flex justify-center">
-          <img src={image} />
+          <img src={image} className="max-h-[418px] max-w-[688px]" />
         </div>
       )}
       <div className="!my-2 flex items-center justify-between">
