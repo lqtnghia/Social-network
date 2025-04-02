@@ -10,8 +10,19 @@ const UserCard = ({
   fullName = '',
   requestSent,
   requestReceived,
+  refetch,
 }) => {
   const [sendFriendRequest, { isLoading }] = useSendFriendRequestMutation();
+
+  const handleSendFriendRequest = async () => {
+    try {
+      await sendFriendRequest(id).unwrap(); // Gửi yêu cầu kết bạn
+      refetch(); // Gọi refetch để làm mới dữ liệu
+    } catch (error) {
+      console.error('Failed to send friend request:', error);
+    }
+  };
+
   function getActionButtons() {
     if (isFriend) {
       return (
@@ -43,7 +54,7 @@ const UserCard = ({
       <Button
         variant="outlined"
         size="small"
-        onClick={() => sendFriendRequest(id)}
+        onClick={() => handleSendFriendRequest()}
         disabled={isLoading}
       >
         {isLoading ? (

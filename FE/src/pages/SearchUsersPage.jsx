@@ -18,7 +18,7 @@ const SearchUsersPage = () => {
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data, isFetching, error } = useSearchUsersQuery({
+  const { data, isFetching, error, refetch } = useSearchUsersQuery({
     limit: 10,
     offset: 0,
     searchQuery,
@@ -42,6 +42,7 @@ const SearchUsersPage = () => {
               isFriend={user.isFriend}
               requestSent={user.requestSent}
               requestReceived={user.requestReceived}
+              refetch={refetch}
             />
           ))
         ) : (
