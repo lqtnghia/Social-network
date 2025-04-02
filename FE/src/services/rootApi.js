@@ -167,13 +167,22 @@ export const rootApi = createApi({
             params: { offset, limit },
           };
         },
-        providesTags: (result) =>
-          result
+        // providesTags: (result) =>
+        //   result
+        //     ? [
+        //         ...result.users.map(({ id }) => ({ type: 'USERS', id })),
+        //         { type: 'USERS', id: 'LIST' },
+        //       ]
+        //     : [{ type: 'USERS', id: 'LIST' }],
+        providesTags: (result) => {
+          console.log('searchUsers result:', result); // Thêm log để kiểm tra
+          return result && result.users && Array.isArray(result.users)
             ? [
                 ...result.users.map(({ id }) => ({ type: 'USERS', id })),
                 { type: 'USERS', id: 'LIST' },
               ]
-            : [{ type: 'USERS', id: 'LIST' }],
+            : [{ type: 'USERS', id: 'LIST' }];
+        },
         refetchOnMountOrArgChange: true, // quan trọng lúc add friend
       }),
       sendFriendRequest: builder.mutation({
@@ -188,7 +197,10 @@ export const rootApi = createApi({
         },
         // args chính là userId
         invalidatesTags: (result, error, args) => [
-          { type: 'USERS', id: args },
+          // { type: 'USERS', id: args },
+          // { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
+          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
+          { type: 'USERS', id: 'LIST' }, // Làm mất hiệu lực toàn bộ danh sách USERS
           { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
         ],
       }),

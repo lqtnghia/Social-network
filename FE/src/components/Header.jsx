@@ -118,7 +118,7 @@ const Header = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Search className="text-gray-500" />
+                        <Search className="text-slate-300" />
                       </InputAdornment>
                     ),
                   }}
@@ -136,6 +136,10 @@ const Header = () => {
                     },
                     '.MuiInputBase-input': {
                       paddingLeft: '10px', // Giúp chữ không quá sát icon
+                      '::placeholder': {
+                        color: '#cad5e2', // Thay đổi màu của placeholder
+                        opacity: 1, // Để tránh bị làm mờ trên một số trình duyệt
+                      },
                     },
                   }}
                 />

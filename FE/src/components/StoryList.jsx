@@ -44,7 +44,7 @@ const StoryList = () => {
       </div>
       {/* Story Items */}
       {stories.map((story, index) => {
-        return <StoryItem story={story} index={index} />;
+        return <StoryItem key={index} story={story} index={index} />;
       })}
     </div>
   );

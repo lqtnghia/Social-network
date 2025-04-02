@@ -11,8 +11,8 @@ const SearchUsersPage = () => {
   if (!searchQuery) {
     return (
       <div className="container flex-col">
-        <p className="text-xl font-bold">Search</p>
-        <p>Please enter a search term to find users.</p>
+        <p className="text-xl font-bold text-black">Search</p>
+        <p className="text-black">Please enter a search term to find users.</p>
       </div>
     );
   }
