@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FriendRequestItem from './FriendRequestItem';
 import { useGetPendingFriendRequestsQuery } from '@services/rootApi';
-import { useState } from 'react';
+import { useSocketContext } from '@context/SocketProvider';
 
 const FriendRequest = () => {
   const [showAll, setShowAll] = useState(false);
-  const { data = [] } = useGetPendingFriendRequestsQuery();
-  console.log(data);
+  const { data = [], refetch } = useGetPendingFriendRequestsQuery();
+  const socket = useSocketContext();
+
+  useEffect(() => {
+    console.log('Socket in FriendRequest:', socket); // Debug socket
+    if (socket) {
+      socket.on('newFriendRequest', (friendRequestData) => {
+        console.log('New friend request received:', friendRequestData);
+        refetch();
+      });
+
+      return () => {
+        socket.off('newFriendRequest');
+      };
+    } else {
+      console.warn('Socket not available');
+    }
+  }, [socket, refetch]);
+
   return (
     <div className="card !m-auto w-64">
       <div className="!mb-2 flex justify-between">
