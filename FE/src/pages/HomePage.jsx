@@ -1,8 +1,8 @@
-import FriendRequest from '@components/FriendRequest';
-import PostCreation from '@components/PostCreation';
-import PostList from '@components/PostList';
-import Sidebar from '@components/Sidebar';
-import StoryList from '@components/StoryList';
+import FriendRequest from '@components/FriendRequest/FriendRequest';
+import PostCreation from '@components/Post/PostCreation';
+import PostList from '@components/Post/PostList';
+import Sidebar from '@components/Sidebar/Sidebar';
+import StoryList from '@components/Story/StoryList';
 
 function HomePage() {
   return (

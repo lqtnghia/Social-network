@@ -1,17 +1,18 @@
-import FormField from '@components/FormField';
-import { Alert, Button } from '@mui/material';
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Button } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import TextInput from '@components/FormInputs/TextInput';
-import { useChangePasswordMutation } from '@services/rootApi';
 import { useDispatch } from 'react-redux';
+import { useChangePasswordMutation } from '@services/rootApi';
+
 import { logOut } from '@redux/slices/authSlice';
-import { useEffect } from 'react';
 import { openSnackbar } from '@redux/slices/snackbarSlice';
-import Sidebar from '@components/Sidebar';
+import FormField from '@components/FormField';
+import TextInput from '@components/FormInputs/TextInput';
+import Sidebar from '@components/Sidebar/Sidebar';
 
 const ChangePassword = () => {
   const [changePassword, { data, isError, error, isSuccess }] =

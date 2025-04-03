@@ -85,7 +85,7 @@ const Header = () => {
     }`;
   return (
     <div className="bg-primary-dark flex">
-      <AppBar color="white" position="static">
+      <AppBar color="transparent" sx={{ backgroundColor: '#293145' }}>
         <Toolbar
           className="container !min-h-fit justify-between"
           aria-hidden={false}

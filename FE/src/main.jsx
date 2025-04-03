@@ -7,23 +7,22 @@ import theme from './configs/muiConfig.js';
 import { Provider } from 'react-redux';
 import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Loading from '@components/Loading';
-import SearchUsersPage from '@pages/SearchUsersPage';
-import ForgotPage from '@pages/auth/ForgotPage';
-import ResetPassword from '@pages/auth/ResetPassword';
-import ChangePasswordPage from '@pages/auth/ChangePasswordPage';
-import UserPage from '@pages/UserPage';
+import Dialog from '@components/Dialog';
 
-const RootLayout = lazy(() => import('@pages/RootLayout.jsx'));
-const AuthLayout = lazy(() => import('@pages/auth/AuthLayout'));
+const RootLayout = lazy(() => import('@layouts/RootLayout.jsx'));
+const AuthLayout = lazy(() => import('@layouts/AuthLayout'));
 const HomePage = lazy(() => import('@pages/HomePage.jsx'));
 const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
 const OTPVerifyPage = lazy(() => import('@pages/auth/OTPVerifyPage'));
-// const ModalProvider = lazy(() => import('@context/ModalProvider'));
-const ProtectedLayout = lazy(() => import('@pages/ProtectedLayout'));
+const ProtectedLayout = lazy(() => import('@layouts/ProtectedLayout'));
 const MessagePage = lazy(() => import('@pages/MessagePage'));
-const Dialog = lazy(() => import('@components/Dialog'));
+const Loading = lazy(() => import('@components/Loading/Loading'));
+const SearchUsersPage = lazy(() => import('@pages/SearchUsersPage'));
+const ForgotPage = lazy(() => import('@pages/auth/ForgotPage'));
+const ResetPassword = lazy(() => import('@pages/auth/ResetPassword'));
+const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage'));
+const UserPage = lazy(() => import('@pages/UserPage'));
 
 const router = createBrowserRouter([
   {

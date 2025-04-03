@@ -1,13 +1,16 @@
-import FormField from '@components/FormField';
-import OTPInput from '@components/FormInputs/OTPInput';
 import { Button, CircularProgress } from '@mui/material';
-import { login } from '@redux/slices/authSlice';
-import { openSnackbar } from '@redux/slices/snackbarSlice';
+
 import { useVerifyOTPMutation } from '@services/rootApi';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { login } from '@redux/slices/authSlice';
+import { openSnackbar } from '@redux/slices/snackbarSlice';
+
+import FormField from '@components/FormField';
+import OTPInput from '@components/FormInputs/OTPInput';
 
 const OTPVerifyPage = () => {
   const { control, handleSubmit } = useForm({

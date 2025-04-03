@@ -5,7 +5,6 @@ import {
   InsertDriveFile,
   Language,
   LiveTv,
-  Lock,
   MailOutline,
   PinDrop,
   Settings,

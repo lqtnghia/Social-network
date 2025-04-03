@@ -1,13 +1,10 @@
 import { Collections, InsertEmoticon, Videocam } from '@mui/icons-material';
 import {
   Avatar,
-  Box,
-  Button,
   Chip,
   Divider,
   IconButton,
   Stack,
-  TextareaAutosize,
   TextField,
 } from '@mui/material';
 import { openDialog } from '@redux/slices/dialogSlice';

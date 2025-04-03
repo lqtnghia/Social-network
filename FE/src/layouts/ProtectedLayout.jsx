@@ -1,5 +1,5 @@
-import Header from '@components/Header';
-import Loading from '@components/Loading';
+import Header from '@components/Header/Header';
+import Loading from '@components/Loading/Loading';
 import SocketProvider from '@context/SocketProvider';
 import { useGetAuthUserQuery } from '@services/rootApi';
 import React from 'react';
@@ -29,7 +29,7 @@ const ProtectedLayout = () => {
     <SocketProvider>
       <div>
         <Header />
-        <div className="bg-dark-200">
+        <div className="!mt-25">
           <Outlet />
         </div>
       </div>

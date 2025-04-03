@@ -1,15 +1,17 @@
-import FormField from '@components/FormField';
-import { Alert, Button, CircularProgress } from '@mui/material';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Alert, Button, CircularProgress } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import TextInput from '@components/FormInputs/TextInput';
 import { useForgotPasswordMutation } from '@services/rootApi';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { openSnackbar } from '@redux/slices/snackbarSlice';
+import TextInput from '@components/FormInputs/TextInput';
+import FormField from '@components/FormField';
 
 const ForgotPage = () => {
   const navigate = useNavigate();

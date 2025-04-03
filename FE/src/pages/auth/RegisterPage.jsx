@@ -1,15 +1,17 @@
-import FormField from '@components/FormField';
 import { Alert, Button } from '@mui/material';
-import TextInput from '@components/FormInputs/TextInput';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '@services/rootApi';
 import { useDispatch } from 'react-redux';
+
 import { openSnackbar } from '@redux/slices/snackbarSlice';
-import { Password } from '@mui/icons-material';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+
+import TextInput from '@components/FormInputs/TextInput';
+import FormField from '@components/FormField';
 
 const RegisterPage = () => {
   const navigate = useNavigate();

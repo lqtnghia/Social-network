@@ -6,9 +6,9 @@ import StoryItem from './StoryItem';
 const stories = [
   {
     name: 'Lap Phan',
-    avatar: '/l.jpg', // Thay bằng URL avatar thật
+    avatar: '/l.jpg',
     background:
-      'https://anhcute.net/wp-content/uploads/2024/11/hinh-anh-nu-che-mat-cute.jpg', // Hình nền
+      'https://anhcute.net/wp-content/uploads/2024/11/hinh-anh-nu-che-mat-cute.jpg',
   },
   {
     name: 'Duy Nguyen',

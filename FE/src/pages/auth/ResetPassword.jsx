@@ -1,14 +1,17 @@
-import FormField from '@components/FormField';
 import { Alert, Button } from '@mui/material';
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import TextInput from '@components/FormInputs/TextInput';
 import { useResetPasswordMutation } from '@services/rootApi';
 import { useDispatch } from 'react-redux';
+
 import { openSnackbar } from '@redux/slices/snackbarSlice';
+
+import FormField from '@components/FormField';
+import TextInput from '@components/FormInputs/TextInput';
 
 const ResetPassword = () => {
   // eslint-disable-next-line no-unused-vars
@@ -81,7 +84,7 @@ const ResetPassword = () => {
         }),
       );
     }
-  }; 
+  };
 
   return (
     <div className="rounded !p-4">

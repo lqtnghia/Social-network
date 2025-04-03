@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-
 import { Suspense } from 'react';
 
 // Supports weights 100-900
@@ -7,7 +6,7 @@ import '@fontsource-variable/public-sans';
 import { Alert, Snackbar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSnackbar } from '@redux/slices/snackbarSlice';
-import Loading from '@components/Loading';
+import Loading from '@components/Loading/Loading';
 
 const RootLayout = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
+import React from 'react';
 import UserCard from '@components/UserCard';
 import { useSearchUsersQuery } from '@services/rootApi';
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const SearchUsersPage = () => {

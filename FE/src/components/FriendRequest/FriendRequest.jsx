@@ -25,7 +25,7 @@ const FriendRequest = () => {
   }, [socket, refetch]);
 
   return (
-    <div className="card !m-auto w-64">
+    <div className="card !m-auto max-h-[320px] w-64 overflow-y-auto">
       <div className="!mb-2 flex justify-between">
         <p>Friend requests</p>
         <p

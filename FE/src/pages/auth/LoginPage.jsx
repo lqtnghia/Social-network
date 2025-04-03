@@ -1,15 +1,16 @@
-import FormField from '@components/FormField';
-import TextInput from '@components/FormInputs/TextInput';
 import { Alert, Button, CircularProgress } from '@mui/material';
-import { useForm } from 'react-hook-form';
-// import { login } from '@redux/slices/authSlice';
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '@services/rootApi';
 import { useDispatch } from 'react-redux';
+
 import { openSnackbar } from '@redux/slices/snackbarSlice';
+import FormField from '@components/FormField';
+import TextInput from '@components/FormInputs/TextInput';
 
 const LoginPage = () => {
   const dispatch = useDispatch();

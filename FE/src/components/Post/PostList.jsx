@@ -1,7 +1,7 @@
 import React from 'react';
-import Loading from './Loading';
 import Post from './Post';
 import { useLazyLoadPosts } from '@hooks/useLazyLoadPosts';
+import Loading from '@components/Loading/Loading';
 
 const PostList = () => {
   const { isFetching, posts } = useLazyLoadPosts();
