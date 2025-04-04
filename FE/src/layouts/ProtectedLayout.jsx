@@ -29,7 +29,7 @@ const ProtectedLayout = () => {
     <SocketProvider>
       <div>
         <Header />
-        <div className="!mt-25">
+        <div className="!mt-20">
           <Outlet />
         </div>
       </div>

@@ -12,16 +12,16 @@ import Dialog from '@components/Dialog';
 const RootLayout = lazy(() => import('@layouts/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@layouts/AuthLayout'));
 const HomePage = lazy(() => import('@pages/HomePage.jsx'));
-const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
-const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
-const OTPVerifyPage = lazy(() => import('@pages/auth/OTPVerifyPage'));
+const RegisterPage = lazy(() => import('@pages/Auth/RegisterPage'));
+const LoginPage = lazy(() => import('@pages/Auth/LoginPage'));
+const OTPVerifyPage = lazy(() => import('@pages/Auth/OTPVerifyPage'));
 const ProtectedLayout = lazy(() => import('@layouts/ProtectedLayout'));
 const MessagePage = lazy(() => import('@pages/MessagePage'));
 const Loading = lazy(() => import('@components/Loading/Loading'));
 const SearchUsersPage = lazy(() => import('@pages/SearchUsersPage'));
-const ForgotPage = lazy(() => import('@pages/auth/ForgotPage'));
-const ResetPassword = lazy(() => import('@pages/auth/ResetPassword'));
-const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage'));
+const ForgotPage = lazy(() => import('@pages/Auth/ForgotPage'));
+const ResetPassword = lazy(() => import('@pages/Auth/ResetPassword'));
+const ChangePasswordPage = lazy(() => import('@pages/Auth/ChangePasswordPage'));
 const UserPage = lazy(() => import('@pages/UserPage'));
 
 const router = createBrowserRouter([

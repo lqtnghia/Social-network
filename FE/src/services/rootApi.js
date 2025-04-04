@@ -215,6 +215,38 @@ export const rootApi = createApi({
             : [{ type: 'PENDING_FRIEND_REQUEST', id: 'LIST' }],
         // refetchOnMountOrArgChange: true,
       }),
+      acceptFriendRequest: builder.mutation({
+        query: (userId) => {
+          return {
+            url: '/friends/accept',
+            body: {
+              friendId: userId,
+            },
+            method: 'POST',
+          };
+        },
+        // args chính là userId
+        invalidatesTags: (result, error, args) => [
+          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
+          { type: 'PENDING_FRIEND_REQUEST', id: args },
+        ],
+      }),
+      cancelFriendRequest: builder.mutation({
+        query: (userId) => {
+          return {
+            url: '/friends/cancel',
+            body: {
+              friendId: userId,
+            },
+            method: 'POST',
+          };
+        },
+        // args chính là userId
+        invalidatesTags: (result, error, args) => [
+          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
+          { type: 'PENDING_FRIEND_REQUEST', id: args },
+        ],
+      }),
     };
   },
 });
@@ -232,4 +264,6 @@ export const {
   useSearchUsersQuery,
   useSendFriendRequestMutation,
   useGetPendingFriendRequestsQuery,
+  useAcceptFriendRequestMutation,
+  useCancelFriendRequestMutation,
 } = rootApi;

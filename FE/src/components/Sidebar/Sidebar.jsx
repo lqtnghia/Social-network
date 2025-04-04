@@ -24,7 +24,7 @@ import { useDetectLayout } from '@hooks/useDetectLayout';
 
 const SidebarContent = () => {
   return (
-    <div className="!m-auto flex w-64 flex-col gap-4">
+    <div className="scrollbar-custom !m-auto flex max-h-[calc(100vh-104px)] w-64 flex-col gap-4 overflow-y-auto">
       <List className="bg-primary-dark flex flex-col gap-4 rounded-sm !p-4 shadow">
         <ListSubheader className="!bg-primary-dark mb-2 !px-0 !leading-none !text-slate-400">
           New Feeds

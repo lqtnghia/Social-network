@@ -63,7 +63,7 @@ const PostCreation = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="bg-primary-dark rounded shadow">
+    <div className="bg-primary-dark !mt-4 rounded shadow">
       <div className="flex gap-2 !p-4">
         <Avatar className="!bg-primary-main">
           {userInfo?.fullName

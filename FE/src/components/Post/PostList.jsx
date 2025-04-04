@@ -7,7 +7,7 @@ const PostList = () => {
   const { isFetching, posts } = useLazyLoadPosts();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="!mt-4 flex flex-col gap-4">
       {(posts || []).map((post) => (
         <Post
           key={post.id}
