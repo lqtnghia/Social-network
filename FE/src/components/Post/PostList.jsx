@@ -5,6 +5,7 @@ import Loading from '@components/Loading/Loading';
 
 const PostList = () => {
   const { isFetching, posts } = useLazyLoadPosts();
+  console.log(posts);
 
   return (
     <div className="!mt-4 flex flex-col gap-4">

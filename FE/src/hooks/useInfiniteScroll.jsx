@@ -11,7 +11,6 @@ export const useInfiniteScroll = ({ hasMore, loadMore, isFetching }) => {
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
       if (clientHeight + scrollTop + 50 >= scrollHeight && !isFetching) {
-        // console.log('Should trigger api');
         loadMore();
       }
     }, 500);

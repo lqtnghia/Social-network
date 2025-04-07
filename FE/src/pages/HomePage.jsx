@@ -11,8 +11,8 @@ function HomePage() {
       <div className="fixed left-0">
         <Sidebar />
       </div>
-      <div className="!m-auto">
-        <StoryList />
+      <div className="!m-auto w-full sm:w-[50%]">
+        {/* <StoryList /> */}
         <PostCreation />
         <PostList />
       </div>

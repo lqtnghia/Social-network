@@ -150,12 +150,8 @@ export const rootApi = createApi({
           };
         },
         providesTags: (result, error, { offset }) =>
-          result
-            ? [
-                { type: 'POSTS', id: offset }, // Tag cụ thể cho từng offset
-                'POSTS', // Tag chung để invalidate toàn bộ
-              ]
-            : ['POSTS'],
+          result ? [{ type: 'POSTS', id: offset }, 'POSTS'] : ['POSTS'],
+        refetchOnMountOrArgChange: true,
       }),
       searchUsers: builder.query({
         query: ({ offset, limit, searchQuery } = {}) => {

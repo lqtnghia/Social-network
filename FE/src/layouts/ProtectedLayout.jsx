@@ -26,14 +26,20 @@ const ProtectedLayout = () => {
   }
 
   return (
-    <SocketProvider>
-      <div>
-        <Header />
-        <div className="!mt-20">
-          <Outlet />
-        </div>
+    // <SocketProvider>
+    //   <div>
+    //     <Header />
+    //     <div className="!mt-20">
+    //       <Outlet />
+    //     </div>
+    //   </div>
+    // </SocketProvider>
+    <div>
+      <Header />
+      <div className="!mt-20">
+        <Outlet />
       </div>
-    </SocketProvider>
+    </div>
   );
 };
 
