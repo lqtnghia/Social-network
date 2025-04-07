@@ -3,9 +3,11 @@ import { Button, Avatar, Divider, Tabs, Tab } from '@mui/material';
 import { Add, CameraAlt as CameraAltIcon, Edit } from '@mui/icons-material';
 import PostList from '@components/Post/PostList';
 import PostCreation from '@components/Post/PostCreation';
+import { useUserInfo } from '@hooks/useUserInfo';
 
 const UserPage = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const user = useUserInfo();
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -41,7 +43,7 @@ const UserPage = () => {
                 fontSize: '3rem', // Kích thước chữ lớn hơn
               }}
             >
-              {'Nghĩa'.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
+              {user.fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
             </Avatar>
             <div
               className="absolute right-3 bottom-0 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-800 bg-gray-700 shadow-lg"
@@ -55,9 +57,7 @@ const UserPage = () => {
         {/* Thông tin người dùng và nút hành động */}
         <div className="!mb-6 flex items-center justify-between !pt-3">
           <div className="!ml-48 flex flex-col">
-            <p className="text-2xl font-bold text-white">
-              Lê Quang Trọng Nghĩa
-            </p>
+            <p className="text-2xl font-bold text-white">{user.fullName}</p>
             <p className="text-gray-400">583 friends</p>
           </div>
           <div className="flex gap-2">
