@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import UserCard from '@components/UserCard';
 import { useSearchUsersQuery } from '@services/rootApi';
@@ -42,7 +43,7 @@ const SearchUsersPage = () => {
               isFriend={user.isFriend}
               requestSent={user.requestSent}
               requestReceived={user.requestReceived}
-              refetch={refetch}
+              // refetch={refetch}
             />
           ))
         ) : (

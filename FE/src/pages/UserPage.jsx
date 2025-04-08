@@ -36,11 +36,11 @@ const UserPage = () => {
             <Avatar
               className="relative"
               sx={{
-                width: 160, // Kích thước lớn hơn
+                width: 160,
                 height: 160,
                 bgcolor: 'primary.main',
-                border: '4px solid #1f2937', // Viền giống trong hình
-                fontSize: '3rem', // Kích thước chữ lớn hơn
+                border: '4px solid #1f2937',
+                fontSize: '3rem',
               }}
             >
               {user.fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
@@ -96,7 +96,7 @@ const UserPage = () => {
         <Divider
           sx={{
             borderColor: '#4b5563',
-            marginY: 2, // Khoảng cách trên dưới
+            marginY: 2,
           }}
         />
       </div>
@@ -143,16 +143,11 @@ const UserPage = () => {
           )}
           {/* Posts tab */}
           {activeTab === 1 && <div>About content goes here</div>}{' '}
-          {/* About tab */}
           {activeTab === 2 && <div>Friends list goes here</div>}{' '}
-          {/* Friends tab */}
           {activeTab === 3 && <div>Photos gallery goes here</div>}{' '}
-          {/* Photos tab */}
           {activeTab === 4 && <div>Check-ins content goes here</div>}{' '}
-          {/* Check-ins tab */}
           {activeTab === 5 && <div>Sports content goes here</div>}{' '}
-          {/* Sports tab */}
-          {activeTab === 6 && <div>More options go here</div>} {/* More tab */}
+          {activeTab === 6 && <div>More options go here</div>}
         </div>
       </div>
     </div>
