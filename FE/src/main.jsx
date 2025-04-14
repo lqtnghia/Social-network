@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Dialog from '@components/Dialog';
+import PostPage from '@pages/PostPage';
 
 const RootLayout = lazy(() => import('@layouts/RootLayout.jsx'));
 const AuthLayout = lazy(() => import('@layouts/AuthLayout'));
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             element: <UserPage />,
           },
         ],
+      },
+      {
+        path: '/posts/:id',
+        element: <PostPage />,
       },
       {
         element: <AuthLayout />,

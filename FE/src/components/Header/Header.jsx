@@ -86,10 +86,7 @@ const Header = () => {
   return (
     <div className="bg-primary-dark flex">
       <AppBar color="transparent" sx={{ backgroundColor: '#293145' }}>
-        <Toolbar
-          className="container !min-h-fit justify-between"
-          aria-hidden={false}
-        >
+        <Toolbar className="container !min-h-fit" aria-hidden={false}>
           {isMinimizeLayout ? (
             <IconButton onClick={() => dispatch(toggleDrawer())}>
               <MenuIcon />

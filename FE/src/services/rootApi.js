@@ -140,7 +140,65 @@ export const rootApi = createApi({
             method: 'POST',
           };
         },
-        invalidatesTags: ['POSTS'],
+        onQueryStarted: async (
+          args,
+          { dispatch, queryFulfilled, getState },
+        ) => {
+          console.log(args);
+
+          const store = getState();
+
+          const tempId = crypto.randomUUID();
+          const newPost = {
+            tempId,
+            content: args.get('content'),
+            image: null,
+            author: {
+              id: store.auth.user.id,
+              fullName: store.auth.user.fullName,
+              email: store.auth.user.email,
+              role: 'regular',
+              image: null,
+            },
+            likes: [],
+            comments: [],
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+
+          console.log(newPost);
+
+          const patchResult = dispatch(
+            rootApi.util.updateQueryData(
+              'getPosts',
+              { limit: 10, offset: 0 },
+              (draft) => {
+                // console.log(draft); // tượng trưng cho danh sách các bài post
+                draft.unshift(newPost);
+              },
+            ),
+          );
+          try {
+            const { data } = await queryFulfilled;
+            console.log(data);
+            dispatch(
+              rootApi.util.updateQueryData(
+                'getPosts',
+                { limit: 10, offset: 0 },
+                (draft) => {
+                  const index = draft.findIndex((post) => post.id === tempId);
+                  if (index !== -1) {
+                    draft[index] = data;
+                  }
+                },
+              ),
+            );
+          } catch (err) {
+            console.log(err);
+            patchResult.undo();
+          }
+        },
+        // invalidatesTags: ['POSTS'],
       }),
       getPosts: builder.query({
         query: ({ offset, limit } = {}) => {
@@ -149,13 +207,28 @@ export const rootApi = createApi({
             params: { offset, limit },
           };
         },
-        providesTags: (result, error, { offset }) =>
-          result ? [{ type: 'POSTS', id: offset }, 'POSTS'] : ['POSTS'],
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.map(({ id }) => ({ type: 'POSTS', id })),
+                { type: 'POSTS', id: 'LIST' },
+              ]
+            : [{ type: 'POSTS', id: 'LIST' }],
+        refetchOnMountOrArgChange: true,
+      }),
+      getPostById: builder.query({
+        query: (id) => {
+          return {
+            url: `/posts/${id}`,
+            method: 'GET',
+          };
+        },
+        providesTags: (result, error, id) =>
+          result ? [{ type: 'POSTS', id }, 'POSTS'] : ['POSTS'],
         refetchOnMountOrArgChange: true,
       }),
       searchUsers: builder.query({
         query: ({ offset, limit, searchQuery } = {}) => {
-          // Đảm bảo searchQuery là chuỗi, nếu không thì gán giá trị mặc định là ''
           const query = typeof searchQuery === 'string' ? searchQuery : '';
           const encodedQuery = encodeURIComponent(query.trim());
           return {
@@ -186,10 +259,8 @@ export const rootApi = createApi({
         },
         // args chính là userId
         invalidatesTags: (result, error, args) => [
-          // { type: 'USERS', id: args },
-          // { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
-          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
-          { type: 'USERS', id: 'LIST' }, // Làm mất hiệu lực toàn bộ danh sách USERS
+          { type: 'USERS', id: args },
+          { type: 'USERS', id: 'LIST' },
           { type: 'PENDING_FRIEND_REQUEST', id: 'LIST' },
         ],
       }),
@@ -223,7 +294,7 @@ export const rootApi = createApi({
         },
         // args chính là userId
         invalidatesTags: (result, error, args) => [
-          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
+          { type: 'USERS', id: args },
           { type: 'PENDING_FRIEND_REQUEST', id: args },
         ],
       }),
@@ -239,8 +310,168 @@ export const rootApi = createApi({
         },
         // args chính là userId
         invalidatesTags: (result, error, args) => [
-          { type: 'USERS', id: args }, // Làm mất hiệu lực cho người dùng cụ thể
+          { type: 'USERS', id: args },
           { type: 'PENDING_FRIEND_REQUEST', id: args },
+        ],
+      }),
+      getFriends: builder.query({
+        query: () => {
+          return {
+            url: `/friends`,
+          };
+        },
+
+        refetchOnMountOrArgChange: true,
+      }),
+      likePost: builder.mutation({
+        query: ({ postId }) => ({
+          url: `/post/${postId}/like`,
+          method: 'POST',
+        }),
+        invalidatesTags: (result, error, postId) => [
+          { type: 'POSTS', id: postId },
+        ],
+      }),
+      unlikePost: builder.mutation({
+        query: ({ postId }) => ({
+          url: `/post/${postId}/like`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: (result, error, postId) => [
+          { type: 'POSTS', id: postId },
+        ],
+      }),
+      addComment: builder.mutation({
+        query: ({ postId, comment }) => ({
+          url: `/posts/${postId}/comment`,
+          method: 'POST',
+          body: { comment },
+        }),
+        onQueryStarted: async (
+          { postId, comment },
+          { dispatch, queryFulfilled, getState },
+        ) => {
+          const tempId = crypto.randomUUID();
+
+          const store = getState();
+          console.log(store);
+
+          const newComment = {
+            id: tempId,
+            content: comment,
+            createdAt: new Date().toISOString(),
+            user: {
+              id: store.auth.user?.id || 'unknown',
+              fullName: store.auth.user?.fullName || 'Unknown User',
+              imageAva: store.auth.user?.imageAva || null,
+            },
+          };
+
+          // Optimistic update cho getPostById
+          const patchResultPostById = dispatch(
+            rootApi.util.updateQueryData('getPostById', postId, (draft) => {
+              draft.comments.push(newComment);
+            }),
+          );
+
+          // Optimistic update cho getPosts
+          const patchResultPosts = dispatch(
+            rootApi.util.updateQueryData(
+              'getPosts',
+              { limit: 10, offset: 0 },
+              (draft) => {
+                const postIndex = draft.findIndex((p) => p.id === postId);
+                if (postIndex !== -1) {
+                  draft[postIndex].comments.push(newComment);
+                }
+              },
+            ),
+          );
+
+          try {
+            const { data } = await queryFulfilled;
+            // Cập nhật lại getPostById
+            dispatch(
+              rootApi.util.updateQueryData('getPostById', postId, (draft) => {
+                const index = draft.comments.findIndex((c) => c.id === tempId);
+                if (index !== -1) {
+                  draft.comments[index] = data;
+                }
+              }),
+            );
+
+            // Cập nhật lại getPosts
+            dispatch(
+              rootApi.util.updateQueryData(
+                'getPosts',
+                { limit: 10, offset: 0 },
+                (draft) => {
+                  const postIndex = draft.findIndex((p) => p.id === postId);
+                  if (postIndex !== -1) {
+                    const commentIndex = draft[postIndex].comments.findIndex(
+                      (c) => c.id === tempId,
+                    );
+                    if (commentIndex !== -1) {
+                      draft[postIndex].comments[commentIndex] = data;
+                    }
+                  }
+                },
+              ),
+            );
+          } catch (err) {
+            patchResultPostById.undo();
+            patchResultPosts.undo();
+            console.error('Error adding comment:', err);
+          }
+        },
+        invalidatesTags: (result, error, { postId }) => [
+          { type: 'POSTS', id: postId },
+          { type: 'POSTS', id: 'LIST' },
+        ],
+      }),
+
+      deleteComment: builder.mutation({
+        query: ({ postId, commentId }) => ({
+          url: `/posts/${postId}/comment/${commentId}`,
+          method: 'DELETE',
+        }),
+        onQueryStarted: async (
+          { postId, commentId },
+          { dispatch, queryFulfilled },
+        ) => {
+          // Optimistic update cho getPostById
+          const patchResultPostById = dispatch(
+            rootApi.util.updateQueryData('getPostById', postId, (draft) => {
+              draft.comments = draft.comments.filter((c) => c.id !== commentId);
+            }),
+          );
+
+          // Optimistic update cho getPosts
+          const patchResultPosts = dispatch(
+            rootApi.util.updateQueryData(
+              'getPosts',
+              { limit: 10, offset: 0 },
+              (draft) => {
+                const postIndex = draft.findIndex((p) => p.id === postId);
+                if (postIndex !== -1) {
+                  draft[postIndex].comments = draft[postIndex].comments.filter(
+                    (c) => c.id !== commentId,
+                  );
+                }
+              },
+            ),
+          );
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            patchResultPostById.undo();
+            patchResultPosts.undo();
+            console.error('Error deleting comment:', err);
+          }
+        },
+        invalidatesTags: (result, error, { postId }) => [
+          { type: 'POSTS', id: postId },
+          { type: 'POSTS', id: 'LIST' },
         ],
       }),
     };
@@ -262,4 +493,9 @@ export const {
   useGetPendingFriendRequestsQuery,
   useAcceptFriendRequestMutation,
   useCancelFriendRequestMutation,
+  useGetPostByIdQuery,
+  useLikePostMutation,
+  useUnlikePostMutation,
+  useAddCommentMutation,
+  useDeleteCommentMutation,
 } = rootApi;

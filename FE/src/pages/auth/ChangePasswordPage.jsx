@@ -82,11 +82,11 @@ const ChangePassword = () => {
   }, [isSuccess, isError, data, error, dispatch, navigate]);
 
   return (
-    <div className="bg-primary-bgdark container">
-      <div className="flex-1">
+    <div className="bg-primary-bgdark flex min-h-screen !p-6">
+      <div className="fixed left-0">
         <Sidebar />
       </div>
-      <div className="rouded bg-primary-dark flex-3 !p-4">
+      <div className="rouded bg-primary-dark absolute top-[25%] right-[11%] w-[60%] !p-4">
         <p className="!mb-5 text-center text-3xl font-bold">
           Change your Password
         </p>

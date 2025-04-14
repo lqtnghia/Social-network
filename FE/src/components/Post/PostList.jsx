@@ -5,14 +5,15 @@ import Loading from '@components/Loading/Loading';
 
 const PostList = () => {
   const { isFetching, posts } = useLazyLoadPosts();
-  // console.log(posts);
+  console.log(posts);
 
   return (
     <div className="!mt-4 flex flex-col gap-4">
       {(posts || []).map((post) => (
         <Post
           key={post.id}
-          fullName={post.author.fullName}
+          id={post.id}
+          fullName={post.fullName || 'Unknown User'}
           createAt={post.createdAt}
           content={post.content}
           image={post.image ? `http://localhost:4010${post.image}` : null}

@@ -8,9 +8,9 @@ import {
 import React from 'react';
 
 const FriendRequestItem = ({ fullName = '', id, onRequestAccepted }) => {
-  const [acceptFriendRequest, { isLoading: isAccepting, data: acceptData }] =
+  const [acceptFriendRequest, { isLoading: isAccepting }] =
     useAcceptFriendRequestMutation();
-  const [cancelFriendRequest, { isLoading: isCanceling, data: cancelData }] =
+  const [cancelFriendRequest, { isLoading: isCanceling }] =
     useCancelFriendRequestMutation();
 
   const handleAccept = async () => {

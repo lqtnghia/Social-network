@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Close } from '@mui/icons-material';
 import NewPostDialog from './configs/NewPostDialog';
 import LiveDialog from './configs/LiveDialog';
+import CommentDialog from './configs/CommentDialog';
 
 const DynamicContent = ({ contentType, additionalData }) => {
   switch (contentType) {

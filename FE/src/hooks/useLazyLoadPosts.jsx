@@ -10,7 +10,7 @@ export const useLazyLoadPosts = () => {
 
   const { data, isFetching, isSuccess } = useGetPostsQuery(
     { offset, limit },
-    { refetchOnMountOrArgChange: true },
+    // { refetchOnMountOrArgChange: true },
   );
   // console.log(data);
   const previousDataRef = useRef();
@@ -22,10 +22,8 @@ export const useLazyLoadPosts = () => {
         return;
       }
       if (offset === 0) {
-        // Reset danh sách khi offset về 0
         setPosts(data);
       } else {
-        // Thêm các bài đăng mới, loại bỏ trùng lặp
         setPosts((prevPosts) => {
           const newPosts = data.filter(
             (newPost) => !prevPosts.some((post) => post.id === newPost.id),
@@ -40,7 +38,16 @@ export const useLazyLoadPosts = () => {
     setOffset((offset) => offset + limit);
   }, []);
 
-  useInfiniteScroll({ hasMore, loadMore, isFetching });
+  useInfiniteScroll({
+    hasMore,
+    loadMore,
+    isFetching,
+    offset,
+    resetFun: () => {
+      setOffset(0);
+      setHasMore(true);
+    },
+  });
 
   return { isFetching, posts };
 };
