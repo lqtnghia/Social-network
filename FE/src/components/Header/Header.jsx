@@ -29,7 +29,7 @@ import {
 } from '@mui/material';
 import { toggleDrawer } from '@redux/slices/settingsSlice';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -40,6 +40,7 @@ const Header = () => {
   const { logOut } = useLogout();
   const { isMinimizeLayout } = useDetectLayout();
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.user.id);
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -60,7 +61,7 @@ const Header = () => {
     >
       <MenuItem
         onClick={() => {
-          navigate('/users');
+          navigate(`/users/${userId}`);
         }}
       >
         Profile

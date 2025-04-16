@@ -315,12 +315,19 @@ export const rootApi = createApi({
         ],
       }),
       getFriends: builder.query({
-        query: () => {
+        query: ({ limit = 10, offset = 0 } = {}) => {
           return {
             url: `/friends`,
+            params: { offset, limit },
           };
         },
-
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.friends.map(({ id }) => ({ type: 'FRIENDS', id })),
+                { type: 'FRIENDS', id: 'LIST' },
+              ]
+            : [{ type: 'FRIENDS', id: 'LIST' }],
         refetchOnMountOrArgChange: true,
       }),
       likePost: builder.mutation({
@@ -429,7 +436,6 @@ export const rootApi = createApi({
           { type: 'POSTS', id: 'LIST' },
         ],
       }),
-
       deleteComment: builder.mutation({
         query: ({ postId, commentId }) => ({
           url: `/posts/${postId}/comment/${commentId}`,
@@ -474,6 +480,17 @@ export const rootApi = createApi({
           { type: 'POSTS', id: 'LIST' },
         ],
       }),
+      getUserById: builder.query({
+        query: (id) => {
+          return {
+            url: `/users/${id}`,
+            method: 'GET',
+          };
+        },
+        providesTags: (result, error, id) =>
+          result ? [{ type: 'USERS', id }, 'USERS'] : ['USERS'],
+        refetchOnMountOrArgChange: true,
+      }),
     };
   },
 });
@@ -493,9 +510,11 @@ export const {
   useGetPendingFriendRequestsQuery,
   useAcceptFriendRequestMutation,
   useCancelFriendRequestMutation,
+  useGetFriendsQuery,
   useGetPostByIdQuery,
   useLikePostMutation,
   useUnlikePostMutation,
   useAddCommentMutation,
   useDeleteCommentMutation,
+  useGetUserByIdQuery,
 } = rootApi;

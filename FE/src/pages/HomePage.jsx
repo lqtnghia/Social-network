@@ -1,4 +1,4 @@
-import FriendList from '@components/Friend/FriendList';
+import FriendList from '@components/Friend/FriendList/FriendList';
 import FriendRequest from '@components/Friend/FriendRequest/FriendRequest';
 import PostCreation from '@components/Post/PostCreation';
 import PostList from '@components/Post/PostList';

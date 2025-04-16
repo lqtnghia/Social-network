@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { Button, Avatar, Divider, Tabs, Tab } from '@mui/material';
-import { Add, CameraAlt as CameraAltIcon, Edit } from '@mui/icons-material';
+import {
+  Add,
+  CameraAlt as CameraAltIcon,
+  Edit,
+  Message,
+  PersonAdd,
+} from '@mui/icons-material';
 import PostList from '@components/Post/PostList';
 import PostCreation from '@components/Post/PostCreation';
 import { useUserInfo } from '@hooks/useUserInfo';
+import { useParams } from 'react-router-dom';
+import { useGetUserByIdQuery } from '@services/rootApi';
+import Loading from '@components/Loading/Loading';
 
 const UserPage = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const user = useUserInfo();
+  const currentUser = useUserInfo();
+  const { id: userId } = useParams();
+  const { data, error, isLoading } = useGetUserByIdQuery(userId);
+  console.log(data);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
+
+  const isOwnProfile = userId === currentUser.id.toString();
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>Lỗi: {error.message}</div>;
 
   return (
     <div className="bg-primary-bgdark flex flex-col">
@@ -43,7 +60,11 @@ const UserPage = () => {
                 fontSize: '3rem',
               }}
             >
-              {user.fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
+              {currentUser.fullName
+                .split(' ')
+                .slice(-1)[0]
+                .charAt(0)
+                .toUpperCase()}
             </Avatar>
             <div
               className="absolute right-3 bottom-0 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-800 bg-gray-700 shadow-lg"
@@ -56,41 +77,84 @@ const UserPage = () => {
 
         {/* Thông tin người dùng và nút hành động */}
         <div className="!mb-6 flex items-center justify-between !pt-3">
-          <div className="!ml-48 flex flex-col">
-            <p className="text-2xl font-bold text-white">{user.fullName}</p>
-            <p className="text-gray-400">583 friends</p>
-          </div>
-          <div className="flex gap-2">
-            <Button
-              variant="contained"
-              size="small"
-              sx={{
-                backgroundColor: '#1b74e4',
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: '#1565c0',
-                },
-              }}
-            >
-              <Add fontSize="small" className="!mr-1" />
-              Add to story
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                backgroundColor: '#4b5563',
-                color: 'white',
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: '#374151',
-                },
-              }}
-            >
-              <Edit fontSize="small" className="!mr-1" />
-              Edit profile
-            </Button>
-          </div>
+          {isOwnProfile ? (
+            <div className="!ml-48 flex flex-col">
+              <p className="text-2xl font-bold text-white">
+                {currentUser.fullName}
+              </p>
+              <p className="text-gray-400">{data.totalFriends} friends</p>
+            </div>
+          ) : (
+            <div className="!ml-48 flex flex-col">
+              <p className="text-2xl font-bold text-white">{data.fullName}</p>
+              <p className="text-gray-400">{data.totalFriends} friends</p>
+            </div>
+          )}
+          {isOwnProfile ? (
+            <div className="flex gap-2">
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  backgroundColor: '#1b74e4',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#1565c0',
+                  },
+                }}
+              >
+                <Add fontSize="small" className="!mr-1" />
+                Add to story
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  backgroundColor: '#4b5563',
+                  color: 'white',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#374151',
+                  },
+                }}
+              >
+                <Edit fontSize="small" className="!mr-1" />
+                Edit profile
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  backgroundColor: '#1b74e4',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#1565c0',
+                  },
+                }}
+              >
+                <PersonAdd fontSize="small" className="!mr-1" />
+                Add friend
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  backgroundColor: '#4b5563',
+                  color: 'white',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#374151',
+                  },
+                }}
+              >
+                <Message fontSize="small" className="!mr-1" />
+                Message
+              </Button>
+            </div>
+          )}
         </div>
 
         <Divider

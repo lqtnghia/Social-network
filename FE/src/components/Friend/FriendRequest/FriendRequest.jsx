@@ -8,7 +8,7 @@ const FriendRequest = () => {
   const [friendRequests, setFriendRequests] = useState(serverData);
 
   useEffect(() => {
-    console.log('serverData updated:', serverData);
+    // console.log('serverData updated:', serverData);
     setFriendRequests(serverData);
   }, [serverData]);
 

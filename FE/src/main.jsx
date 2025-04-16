@@ -23,7 +23,7 @@ const SearchUsersPage = lazy(() => import('@pages/SearchUsersPage'));
 const ForgotPage = lazy(() => import('@pages/Auth/ForgotPage'));
 const ResetPassword = lazy(() => import('@pages/Auth/ResetPassword'));
 const ChangePasswordPage = lazy(() => import('@pages/Auth/ChangePasswordPage'));
-const UserPage = lazy(() => import('@pages/UserPage'));
+const ProfilePage = lazy(() => import('@pages/ProfilePage'));
 
 const router = createBrowserRouter([
   {
@@ -49,8 +49,8 @@ const router = createBrowserRouter([
             element: <SearchUsersPage />,
           },
           {
-            path: '/users',
-            element: <UserPage />,
+            path: '/users/:id',
+            element: <ProfilePage />,
           },
         ],
       },

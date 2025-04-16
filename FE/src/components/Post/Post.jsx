@@ -1,4 +1,5 @@
-import { Comment, ThumbUp } from '@mui/icons-material';
+import Comment from '@components/Comment/Comment';
+import { ThumbUp } from '@mui/icons-material';
 import { Avatar, Button, Menu, MenuItem, TextField } from '@mui/material';
 // import { openDialog } from '@redux/slices/dialogSlice';
 import {
@@ -84,8 +85,8 @@ const Post = ({
     }
   };
 
-  console.log('Post ID:', id);
-  console.log('Comments:', comments);
+  // console.log('Post ID:', id);
+  // console.log('Comments:', comments);
 
   return (
     <div className="bg-primary-dark rounded !p-4 shadow">
@@ -184,7 +185,16 @@ const Post = ({
         </Button>
       </div>
 
-      {isCommenting && (
+      <Comment
+        comments={comments}
+        isCommenting={isCommenting}
+        commentText={commentText}
+        setCommentText={setCommentText}
+        handleCommentSubmit={handleCommentSubmit}
+        handleDeleteComment={handleDeleteComment}
+        userInfo={userInfo}
+      />
+      {/* {isCommenting && (
         <div className="!mt-2 flex gap-2">
           <TextField
             fullWidth
@@ -223,7 +233,7 @@ const Post = ({
           </Button>
         </div>
       )}
-      {/* Hiển thị danh sách bình luận */}
+      
       {comments.length > 0 && (
         <div className="!mt-4 !p-2">
           {comments.map((comment) => (
@@ -265,7 +275,7 @@ const Post = ({
             </div>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
