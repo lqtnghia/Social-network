@@ -1,6 +1,7 @@
 import { Avatar, Button, TextField } from '@mui/material';
 import dayjs from 'dayjs';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Comment = ({
   comments = [],
@@ -11,6 +12,11 @@ const Comment = ({
   handleDeleteComment,
   userInfo,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/users/${userInfo.id}`);
+  };
   return (
     <div>
       {isCommenting && (
@@ -60,7 +66,7 @@ const Comment = ({
               key={comment.id}
               className="border-dark-200 !mb-2 flex items-start gap-2 !border-b !pb-2"
             >
-              <Avatar className="!bg-primary-main">
+              <Avatar className="!bg-primary-main" onClick={handleClick}>
                 {comment.user && comment.user.fullName
                   ? comment.user.fullName
                       .split(' ')
@@ -71,7 +77,10 @@ const Comment = ({
               </Avatar>
               <div className="bg-primary-bgdark flex-1 rounded-sm !p-2">
                 <div className="flex items-center justify-between">
-                  <p className="font-bold">
+                  <p
+                    className="font-bold hover:cursor-pointer"
+                    onClick={handleClick}
+                  >
                     {comment.user && comment.user.fullName
                       ? comment.user.fullName
                       : 'Unknown User'}

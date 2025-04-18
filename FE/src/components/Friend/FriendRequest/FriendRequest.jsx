@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import FriendRequestItem from './FriendRequestItem';
 import { useGetPendingFriendRequestsQuery } from '@services/rootApi';
+import { useNavigate } from 'react-router-dom';
 
 const FriendRequest = () => {
   const [showAll, setShowAll] = useState(false);
   const { data: serverData = [], refetch } = useGetPendingFriendRequestsQuery();
   const [friendRequests, setFriendRequests] = useState(serverData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log('serverData updated:', serverData);
@@ -22,6 +24,10 @@ const FriendRequest = () => {
       return updatedRequests;
     });
     refetch();
+  };
+
+  const handleClick = (id) => {
+    navigate(`/users/${id}`);
   };
 
   return (
@@ -48,6 +54,9 @@ const FriendRequest = () => {
                 key={request.sender.id}
                 id={request.sender.id}
                 onRequestAccepted={handleRequestAccepted}
+                handleClick={() => {
+                  handleClick(request.sender.id);
+                }}
               />
             ),
           )

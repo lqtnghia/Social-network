@@ -2,7 +2,8 @@
 import React from 'react';
 import UserCard from '@components/UserCard';
 import { useSearchUsersQuery } from '@services/rootApi';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Loading from '@components/Loading/Loading';
 
 const SearchUsersPage = () => {
   const location = useLocation();
@@ -27,11 +28,11 @@ const SearchUsersPage = () => {
   console.log('API response:', { data, error });
 
   return (
-    <div className="bg-primary-bgdark container flex-col">
+    <div className="bg-primary-bgdark container min-h-screen flex-col">
       <p className="text-xl font-bold">Search</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {isFetching ? (
-          <p>Loading...</p>
+          <Loading />
         ) : error ? (
           <p>Error: {error?.data?.message || 'An error occurred'}</p>
         ) : (data?.users || []).length > 0 ? (

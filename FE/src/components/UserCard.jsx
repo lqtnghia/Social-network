@@ -96,7 +96,9 @@ const UserCard = ({
       <Avatar className="!bg-primary-main !mb-3 !h-12 !w-12">
         {fullName.split(' ').slice(-1)[0].charAt(0).toUpperCase()}
       </Avatar>
-      <Link className="text-lg font-bold">{fullName}</Link>
+      <Link to={`/users/${id}`} className="text-lg font-bold">
+        {fullName}
+      </Link>
       <div className="!mt-4">{getActionButtons()}</div>
     </div>
   );

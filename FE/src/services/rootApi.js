@@ -227,6 +227,21 @@ export const rootApi = createApi({
           result ? [{ type: 'POSTS', id }, 'POSTS'] : ['POSTS'],
         refetchOnMountOrArgChange: true,
       }),
+      getPostsByAuthor: builder.query({
+        query: ({ authorId, offset, limit } = {}) => ({
+          url: `/posts/author/${authorId}`,
+          params: { offset, limit },
+        }),
+        providesTags: (result, error, { authorId }) =>
+          result
+            ? [
+                ...result.posts.map(({ id }) => ({ type: 'USER_POSTS', id })),
+                { type: 'USER_POSTS', id: authorId },
+              ]
+            : [{ type: 'USER_POSTS', id: authorId }],
+        refetchOnMountOrArgChange: true,
+      }),
+
       searchUsers: builder.query({
         query: ({ offset, limit, searchQuery } = {}) => {
           const query = typeof searchQuery === 'string' ? searchQuery : '';
@@ -505,6 +520,7 @@ export const {
   useGetAuthUserQuery,
   useCreatePostMutation,
   useGetPostsQuery,
+  useGetPostsByAuthorQuery,
   useSearchUsersQuery,
   useSendFriendRequestMutation,
   useGetPendingFriendRequestsQuery,

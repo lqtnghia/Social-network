@@ -11,7 +11,7 @@ function HomePage() {
       <div className="fixed left-0">
         <Sidebar />
       </div>
-      <div className="h-min-screen !m-auto w-full sm:w-[50%]">
+      <div className="!m-auto min-h-screen w-full sm:w-[50%]">
         {/* <StoryList /> */}
         <PostCreation />
         <PostList />

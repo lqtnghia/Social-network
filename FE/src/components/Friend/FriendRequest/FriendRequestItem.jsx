@@ -7,7 +7,12 @@ import {
 } from '@services/rootApi';
 import React from 'react';
 
-const FriendRequestItem = ({ fullName = '', id, onRequestAccepted }) => {
+const FriendRequestItem = ({
+  fullName = '',
+  id,
+  onRequestAccepted,
+  handleClick,
+}) => {
   const [acceptFriendRequest, { isLoading: isAccepting }] =
     useAcceptFriendRequestMutation();
   const [cancelFriendRequest, { isLoading: isCanceling }] =
@@ -45,7 +50,10 @@ const FriendRequestItem = ({ fullName = '', id, onRequestAccepted }) => {
   };
 
   return (
-    <div className="bg-primary-dark flex flex-col gap-2 rounded !p-3">
+    <div
+      className="bg-primary-dark flex flex-col gap-2 rounded !p-3 hover:cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="flex gap-2">
         <div>
           <Avatar className="!bg-primary-main">
