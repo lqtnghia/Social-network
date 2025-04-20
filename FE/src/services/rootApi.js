@@ -347,19 +347,102 @@ export const rootApi = createApi({
       }),
       likePost: builder.mutation({
         query: ({ postId }) => ({
-          url: `/post/${postId}/like`,
+          url: `/posts/${postId}/like`,
           method: 'POST',
         }),
-        invalidatesTags: (result, error, postId) => [
+        onQueryStarted: async (
+          { postId },
+          { dispatch, queryFulfilled, getState },
+        ) => {
+          const userId = getState().auth.user?.id;
+
+          // Optimistic update cho getPostById
+          const patchResultPostById = dispatch(
+            rootApi.util.updateQueryData('getPostById', postId, (draft) => {
+              draft.likes.push({
+                userId,
+                postId,
+                createdAt: new Date().toISOString(),
+              });
+            }),
+          );
+
+          // Optimistic update cho getPosts
+          const patchResultPosts = dispatch(
+            rootApi.util.updateQueryData(
+              'getPosts',
+              { limit: 10, offset: 0 },
+              (draft) => {
+                const postIndex = draft.findIndex((p) => p.id === postId);
+                if (postIndex !== -1) {
+                  draft[postIndex].likes.push({
+                    userId,
+                    postId,
+                    createdAt: new Date().toISOString(),
+                  });
+                }
+              },
+            ),
+          );
+
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            patchResultPostById.undo();
+            patchResultPosts.undo();
+            console.error('Error liking post:', err);
+          }
+        },
+        invalidatesTags: (result, error, { postId }) => [
           { type: 'POSTS', id: postId },
         ],
       }),
+
       unlikePost: builder.mutation({
         query: ({ postId }) => ({
-          url: `/post/${postId}/like`,
+          url: `/posts/${postId}/like`,
           method: 'DELETE',
         }),
-        invalidatesTags: (result, error, postId) => [
+        onQueryStarted: async (
+          { postId },
+          { dispatch, queryFulfilled, getState },
+        ) => {
+          const userId = getState().auth.user?.id;
+
+          // Optimistic update cho getPostById
+          const patchResultPostById = dispatch(
+            rootApi.util.updateQueryData('getPostById', postId, (draft) => {
+              draft.likes = draft.likes.filter(
+                (like) => like.userId !== userId,
+              );
+            }),
+          );
+
+          // Optimistic update cho getPosts
+          const patchResultPosts = dispatch(
+            rootApi.util.updateQueryData(
+              'getPosts',
+              { limit: 10, offset: 0 },
+              (draft) => {
+                const postIndex = draft.findIndex((p) => p.id === postId);
+                if (postIndex !== -1) {
+                  draft[postIndex].likes = draft[postIndex].likes.filter(
+                    (like) => like.userId !== userId,
+                  );
+                }
+              },
+            ),
+          );
+
+          try {
+            await queryFulfilled;
+          } catch (err) {
+            patchResultPostById.undo();
+            patchResultPosts.undo();
+            console.error('Error unliking post:', err);
+          }
+        },
+        invalidatesTags: (result, error, { postId }) => [
           { type: 'POSTS', id: postId },
         ],
       }),

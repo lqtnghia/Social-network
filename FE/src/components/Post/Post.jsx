@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Post = ({
   fullName = '',
@@ -30,8 +31,8 @@ const Post = ({
   const userInfo = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
-  const [likePost] = useLikePostMutation();
-  const [unlikePost] = useUnlikePostMutation();
+  const [likePost, { isLoading: isLiking }] = useLikePostMutation();
+  const [unlikePost, { isLoading: isUnLiking }] = useUnlikePostMutation();
   const [addComment] = useAddCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
 
@@ -55,14 +56,21 @@ const Post = ({
   };
 
   const handleLike = async () => {
+    if (!id) {
+      toast.error('Không thể thích bài đăng do lỗi ID!');
+      return;
+    }
     try {
       if (isLiked) {
-        await unlikePost(id).unwrap();
+        await unlikePost({ postId: id }).unwrap();
+        toast.success('Bỏ thích bài đăng thành công!');
       } else {
-        await likePost(id).unwrap();
+        await likePost({ postId: id }).unwrap();
+        toast.success('Thích bài đăng thành công!');
       }
     } catch (error) {
       console.error('Lỗi khi thích bài đăng:', error);
+      toast.error('Không thể thực hiện hành động, vui lòng thử lại!');
     }
   };
 
@@ -169,6 +177,7 @@ const Post = ({
           size="small"
           className="flex-1 !text-white"
           onClick={handleLike}
+          disabled={isLiking || isUnLiking}
         >
           <ThumbUp
             fontSize="small"

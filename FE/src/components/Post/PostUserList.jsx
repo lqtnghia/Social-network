@@ -9,7 +9,7 @@ const PostUserList = ({ authorId, isOwnProfile, fullName }) => {
   console.log('Posts in PostUserList:', posts);
 
   return (
-    <div className="!mt-4 flex flex-col gap-4">
+    <div className="!mt-4 flex min-h-[300px] flex-col gap-4">
       {posts.length === 0 && !isFetching ? (
         <p className="text-center text-gray-500">
           {isOwnProfile
