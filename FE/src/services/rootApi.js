@@ -589,6 +589,74 @@ export const rootApi = createApi({
           result ? [{ type: 'USERS', id }, 'USERS'] : ['USERS'],
         refetchOnMountOrArgChange: true,
       }),
+      // 1. Lấy tin nhắn
+      getMessages: builder.query({
+        query: ({ userId, offset = 0, limit = 20 }) => ({
+          url: '/messages',
+          params: { userId, offset, limit },
+        }),
+        providesTags: (result, error, { userId }) =>
+          result
+            ? [
+                ...result.map(({ _id }) => ({ type: 'MESSAGES', id: _id })),
+                { type: 'MESSAGES', id: userId },
+              ]
+            : [{ type: 'MESSAGES', id: userId }],
+        refetchOnMountOrArgChange: true,
+      }),
+
+      // 2. Tạo tin nhắn
+      createMessage: builder.mutation({
+        query: ({ message, receiver }) => ({
+          url: '/messages/create',
+          method: 'POST',
+          body: { message, receiver },
+        }),
+        invalidatesTags: (result, error, { receiver }) => [
+          { type: 'MESSAGES', id: receiver },
+          { type: 'CONVERSATIONS', id: 'LIST' },
+        ],
+      }),
+
+      // 3. Lấy danh sách cuộc trò chuyện
+      getConversations: builder.query({
+        query: () => ({
+          url: '/messages/conversations',
+        }),
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.map(({ _id }) => ({
+                  type: 'CONVERSATIONS',
+                  id: _id,
+                })),
+                { type: 'CONVERSATIONS', id: 'LIST' },
+              ]
+            : [{ type: 'CONVERSATIONS', id: 'LIST' }],
+        refetchOnMountOrArgChange: true,
+      }),
+
+      // 4. Đánh dấu tin nhắn đã xem
+      markMessagesAsSeen: builder.mutation({
+        query: ({ sender }) => ({
+          url: '/messages/update-seen',
+          method: 'PUT',
+          body: { sender },
+        }),
+        invalidatesTags: (result, error, { sender }) => [
+          { type: 'MESSAGES', id: sender },
+          { type: 'CONVERSATIONS', id: 'LIST' },
+        ],
+      }),
+
+      // 5. Lấy số lượng tin nhắn chưa đọc
+      getUnreadCount: builder.query({
+        query: () => ({
+          url: '/messages/unread-count',
+        }),
+        providesTags: ['MESSAGES'],
+        refetchOnMountOrArgChange: true,
+      }),
     };
   },
 });
@@ -616,4 +684,9 @@ export const {
   useAddCommentMutation,
   useDeleteCommentMutation,
   useGetUserByIdQuery,
+  useGetMessagesQuery,
+  useCreateMessageMutation,
+  useGetConversationsQuery,
+  useMarkMessagesAsSeenMutation,
+  useGetUnreadCountQuery,
 } = rootApi;
